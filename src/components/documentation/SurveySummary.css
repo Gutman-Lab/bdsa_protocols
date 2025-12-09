@@ -1,0 +1,271 @@
+.survey-summary {
+  padding: 1rem 0;
+}
+
+.summary-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.summary-header h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.summary-section {
+  margin-bottom: 2.5rem;
+}
+
+.summary-section h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.findings-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.findings-list li {
+  margin-bottom: 0.75rem;
+  color: #555;
+}
+
+.protocols-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.protocol-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.protocol-card h4 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.protocol-frequency {
+  font-size: 0.9rem;
+  color: #3498db;
+  font-weight: 600;
+}
+
+.protocol-regions {
+  font-size: 0.9rem;
+}
+
+.protocol-regions ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.protocol-regions li {
+  margin-bottom: 0.25rem;
+  color: #666;
+}
+
+.more-regions {
+  color: #999;
+  font-style: italic;
+}
+
+.regions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.region-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.region-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.region-header h4 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.region-frequency {
+  font-size: 0.9rem;
+  color: #3498db;
+  font-weight: 600;
+}
+
+.region-stains,
+.region-landmarks,
+.region-sectioning {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.region-landmarks ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.thickness-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.thickness-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.thickness-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.thickness-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.thickness-value {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.thickness-distribution ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.thickness-distribution li {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.antibodies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.antibody-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.antibody-card h4 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.antibody-card ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.antibody-card li {
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.figures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.figure-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.figure-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.figure-card p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .protocols-grid,
+  .antibodies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .thickness-info {
+    grid-template-columns: 1fr;
+  }
+
+  .figures-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+

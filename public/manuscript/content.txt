@@ -1,0 +1,200 @@
+Survey of Neuroanatomic Sampling and Staining Procedures in Alzheimer Disease Research Center Brain Banks
+
+Juan C. Vizcarra1, Andrew F. Teich2, Brittany N. Dugger3*, David A. Gutman4*, and the Alzheimer’s Disease Research Center Digital Pathology Working Group5
+
+ 1 Department of Biomedical Engineering, Emory University & Georgia Institute of Technology, Atlanta, USA
+
+2 Department of Pathology and Cell Biology, Department of Neurology, The Taub Institute for Research on Alzheimer’s Disease and the Aging Brain, Columbia University, New York, New York, USA
+
+3 Department of Pathology and Laboratory Medicine, University of California-Davis, Sacramento, California, USA
+
+4 Department of Neuropathology, Emory University, Atlanta, Georgia, USA
+
+5 Members & affiliations of group can be found in Supplementary material 2.
+
+Corresponding authors:
+
+- Brittany N. Dugger, Department of Pathology and Laboratory Medicine, University of California, Davis, Research III, third floor, suite 3400A, 4645 2nd Ave., Sacramento, CA, 95817, USA. Ph: 916-734-3855. Email: bndugger@ucdavis.edu.
+
+- David A. Gutman, Department of Pathology and Laboratory Medicine, Emory University, 1364 Clifton Rd, Atlanta, GA 30322, USA. Ph: 404-712-9206. Email: dgutman@emory.edu.
+
+
+
+Abstract
+
+The collection of post-mortem brain tissue has been a core function of the Alzheimer Disease Research Center’s (ADRCs) network since its inception. Individual brain banks and centers follow detailed protocols to record, store, and manage complex datasets that include clinical data, demographics, and when post-mortem tissue is available, a detailed neuropathological assessment. Since each institution often has specific research foci, there can be significant variability in tissue collection and processing workflows. While published guidelines exist for select diseases, such as those put forth by the NIA-AA, it is of importance to denote the current practices across institutions. To this end a survey was developed and sent to brain bank leaders, collecting data on brain region sampling, including anatomic landmarks used, staining (including antibodies used), as well as whole-slide-image scanning hardware. We distributed this survey to 40 brain banks and obtained a response rate of 95% (38 / 40). Most brain banks followed guidelines defined by the NIA-AA, having H&E staining in all recommended regions and targeted region-based amyloid beta, tau, and alpha-synuclein immunohistochemical staining. However, sampling consistency varied related to key anatomic landmarks/locations in select regions, such as the striatum, periventricular white matter, and parietal cortex. This study highlights the diversity and similarities amongst brain banks and discusses considerations when amalgamating data/samples across multiple centers. This survey aids in establishing benchmarks to enhance dialogues on divergences in workflows in a feasible way. 
+
+Keywords: Neuropathology, ADRCs, Brain Banks
+
+Introduction
+
+Brain banks are a fundamental resource to facilitate scientific research to better understand the complex biology of the human brain. Human tissues are a critical component in understanding a wide range of disorders that affect human health, including neurodegenerative disorders such as Alzheimer Disease and Related Disorders (ADRD), Parkinson’s Disease,  and Chronic Traumatic Encephalopathy (CTE), as well as understanding the effects of normal aging and are critical to translational research.1,2 Within the ADRD community, the National Institute of Health (NIH) has supported many brain-banking efforts, including Alzheimer Disease Research Centers (ADRCs).3–5 Many brain banks have been collecting tissue for decades and have developed specific protocols on sectioning, staining, and preserving samples typically driven by a specific research area or focus. For example, in a research repository focused on participants with Amyotrophic Lateral Sclerosis (ALS) the spinal cord may be routinely included in the sampling schematic, while this may not be routine in one focused on Alzheimer disease (AD).
+
+A key mandate of ADRCs is to aggregate and share the data from research participants, including clinical data, neuropsychological assessments, patient demographics, and when available, neuropathology (NP) assessments as well as tissue samples.6 The NP data provides the ground truth diagnosis, based on a review of a specific set of stained brained region slides, using standardized semi-quantitative rating scales developed over the past several decades. For AD these include the Consortium to Establish a Registry for Alzheimer's Disease (CERAD) score, Braak neurofibrillary tangle stage, amyloid beta plaque Thal phase, and others.7–11 Guidelines regarding ADRD diagnosis have been previously published, and are updated as research progresses.12–15 
+
+Following initial autopsies, a typical protocol will involve dissection of brain tissue and placement into millimeter-sized cassettes to be paraffinized, sectioned, and then stained either histochemically or for select immunohistochemical markers, although there exist numerous variations, such as large format free floating sections. The specific staining protocols, sample preparation including slice thickness, antibodies or other reagents used for processing, anatomic regions surveyed are just a few parameters that can vary from center to center (bank to bank), or even case to case.16 To better understand this variability, we developed a web-based survey and distributed to 39 past and current ADRC Neuropathology Core leaders and 1 non-ADRC brain bank leader (Supplementary Table S1). This survey included questions related to specific brain regions sampled, anatomic landmarks included, immunohistochemistry (IHC) practices including antibody use, whole-slide-image (WSI) scanners available, and general questions regarding standard NP procedure at each site (Supplementary Document). The survey was designed to include regions & stains within the 2012 NIA-AA guidelines for the neuropathologic assessment of AD, as well as additional areas & stains.12
+
+With the advent and more widespread availability of whole slide image (WSI) technology, it is now feasible to digitize neuropathology datasets at high resolution. Given potential variability in staining, sectioning, blocking parameters, and naming conventions, it is critical to first assess the current landscape across research institutes to identify common practices. Data harmonization efforts will require creation of a standardized data dictionary in order to facilitate data sharing in the spirit of the FAIR guidelines (findability, accessibility, interoperability, and reusability).17 The results of this survey can also facilitate recommendations for future work, by identifying the most common regions, stains, and procedures across a majority of institutions. 
+
+Materials and methods
+
+The authors, along with input from the ADRC digital pathology working group, produced and disseminated a survey to brain bank leaders in the spring / summer of 2022 (for list of submitted surveys see Supplementary Table S1). Survey questions focused on obtaining data for immunohistochemistry (IHC) procedure used, sampling of brain hemispheres, WSI scanners available, antibody usage, and brain region staining and sampling procedures. For anatomic areas, select landmarks were surveyed to identify heterogeneity between sampling procedures among ADRCs (for the complete survey see Supplementary Document). 
+
+The survey questions were developed using the jotform.com platform. A URL link to the survey was electronically distributed via email to 39 past and current ADRC Neuropathology Core leaders and 1 non-ADRC brain bank leader. Participation was voluntary. Responses contained no personal identifiable information and results were anonymized. Survey responses were compiled in the fall of 2022. 
+
+Survey entries were exported into an excel spreadsheet file for analysis. All analyses were done using open source Python libraries through custom code found in the GitHub repository, including the results excel file: https://github.com/Gutman-Lab/ADRC-np-survey-2023. Categorical data were presented as frequencies and percentages. Most questions in the survey had multi-select answers that were not mutually exclusive (multiple answers possible for each question) or were free text answers. Questions regarding the counter staining process for IHC were yes/no questions. 
+
+Results
+
+The survey requests were sent out to 39 past and present ADRC NP core leaders, plus 1 additional brain bank leader not affiliated with an ADRC. The survey obtained a response rate of 95% (38/40). The majority of the surveys were completed by the center’s NP leader or co-leader (33/38). The survey collected center information regarding the IHC procedure used, sampling of brain hemispheres, WSI scanners available, antibody usage, and brain region staining and sampling procedures.
+
+IHC processing and counterstaining was similar across centers, with most respondents stating they use hematoxylin staining with diaminobenzidine (DAB) as the chromogen (brown) without enhancement (30/38). Other responses included use of neutral red with DAB as chromogen with nickel enhancement (3/38), only hematoxylin staining (4/38), or only DAB with nickel enhancement (1/38). 
+
+Most respondents denoted sampling the left hemisphere of the brain (32/34), 13 of which sampled both hemispheres, and 2 sampled only the right hemisphere. Answers to this question were not mutually exclusive and included sampling the left, right, or both hemispheres of the brain. Four respondents did not specify their hemisphere sampling procedure. Other sampling parameters of the brain were less consistent across respondents, particularly in average section thickness collected. Average section thickness varied considerably across centers, with the most common section size being 5 µm (12/38), followed by 8 µm (7/38), 4 µm (6/38), and 6 µm (5/38). Some centers (3/38) sample within a range of sizes, i.e. 5 - 7 µm. The thinnest section size sampled was 2 µm and the thickest was 80 µm. Most centers have a single expert or neuropathologist do all the blocking (23/37), with the remaining utilizing a group of individuals that routinely perform the blocking (14/37); responses were free text answers.
+
+The type of WSI scanner available was also surveyed for all institutions. The most common type of scanner denoted was the Aperio / Leica (25/38). Other available scanners included Olympus, Zeiss, Huron, Philips, Hamamatsu nanozoomer, Keyence, and 3D Histotech. Most respondents had access to only a single type of scanner (29/38), while 4 had two scanner types available. Additionally, 5 respondents stated they did not have any access to a WSI scanner. These data are similar to previously published results.18
+
+With respect to immunohistochemistry, most respondents utilize the AT8 antibody when staining for tau (23/37, antibody information missing for one center) or the PHF1 antibody (14/37). Some respondents stated use of more than one antibody variant for tau staining, with two centers using three, and two centers using two antibodies. Other tau antibodies in use include CP13 and RD3/RD4. Amyloid beta (aβ) staining showed a higher number of antibodies used by respondents, with 12 different antibodies in current use. The most common of these are the 4G8 (13/37) and the 6E10 (9/37) antibodies. Only one respondent stated use of multiple antibodies for aβ staining (10D5, 4G8, and 6E10).
+
+For alpha-synuclein (ɑSyn) and TDP-43, respondents specified the use of phospho-specific and / or non-phospho specific antibody use. Most respondents use a phospho-specific antibody for TDP-43 (29/37). For ɑSyn, about half of respondents use each type of antibody (phospho: 18, non-phospho: 17) and two respondents specified alternative approaches (LB509 EMD Millipore & Millipore #AB5038P). Additionally, one respondent indicated both phospho and non-phospho antibody use.
+
+Nineteen brain regions were surveyed to assess the stains applied, anatomical landmarks included, and sampling methodology (olfactory bulb not surveyed for this). The survey identified a set of highly consistent combinations of stains and regions across centers/banks. For example, the H&E stain was denoted to be used by all respondents, though there were a set of 6 regions (central gyri, periventricular white matter, anterior hippocampus, olfactory bulb, posterior cingulate gyrus, & temporal pole) that were not universally stained with H&E. Other stains, like ɑSyn, were used primarily in targeted regions including the amygdala, frontal gyri, and posterior hippocampus (Figure 1). 
+
+As anatomic regions can be vast and vary in mediolateral, superior/inferior, and/or rostrocaudal aspects, we also surveyed for the presence of specific anatomic landmarks within select sampled brain regions. For all landmark questions, the answers were non-mutually exclusive. The inclusion of specific anatomic landmarks varied considerably across respondents. For example, for the frontal gyri region most respondents consistently sample the middle frontal gyrus (32/37 centers that collect the region) but only a few respondents stated they also include the inferior frontal gyrus (8/37). For the cerebellum, nearly all respondents stated they sample the dentate nucleus (36/37) but few sample the vermis (11/37). Similarly, for the thalamus and subthalamic nuclei region not all respondents include the subthalamic nuclei (30/37), and other landmarks in this region are only sampled by a subset of the brain banks (Figure 2 shows responses for select regions, additional results are included in Supplementary Figure S1). 
+
+For most regions, most respondents stated sampling after coronal slicing (>80%) as opposed to before. For the cerebellum region the survey asked if the sampling was done with longitudinal, transverse, and / or coronal slicing. Most centers use longitudinal sectioning when sampling this region (21/38), with a subset using transverse (n=6), coronal (n=5), or some other approach (n=5) (Figure 3). 
+
+Additional questions not reported, although data are within https://github.com/Gutman-Lab/ADRC-np-survey-2023, are those regarding antibody vendor use and for a select set of regions, the number of gyri & sulci targeted during sampling. These questions were free text answers, and while we attempted to glean data from these, ultimately there was a high level of variability in the answers to draw conclusions. 
+
+Discussion
+
+Overall, we received survey responses from 95% of sites, providing us detailed information regarding neuropathology (NP) protocols. Standardized semi-quantitative scoring (i.e. Braak staging, CERAD, Thal phase) have been a longstanding component of the ADRC / National Alzheimer’s Coordinating Center (NACC) data submissions process.15,19 Across respondents, the most consistently sampled regions include the frontal gyri, visual cortex, midbrain, posterior hippocampus, and striatum (37/38 centers). The most inconsistently sampled regions included the posterior cingulate gyrus and the temporal pole (18/38). While these regions were denoted to be stained with H&E often; aSyn IHC was most frequent in the midbrain & amygdala (>32 centers), and aBeta staining was most frequent in striatum, frontal gyri, cerebellum, and posterior hippocampus (>29 centers). There was variability with respect to tissue thickness (min=2μm, max=80μm, mode= 5μm) , and the specific IHC epitope/antibody used is also more variable.
+
+The use of specific landmarks to further localize a given tissue section showed a much higher degree of heterogeneity (Figure 2). The brain regions define a relatively large brain volume, and not a specific coordinate in a standardized brain reference space (e.g. Talairach / MNI space) or Brodmann area.20,21 For many analyses, this level of precision is likely sufficient for cross-institutional studies to denote presence/absence of neuropathological markers. Also for analysis focused on semi-quantitative rating scales like CERAD and Braak NFT staging for tau deposits that have been previously validated in multi-institutional cohorts.8,9,11,22–24 Depending on the specific scientific question, understanding these additional details may be important. 
+
+Given the recent advancements in digital pathology, it can be advantageous to survey the radiology community as they have had access to digital images for some time. Within the radiology imaging community, standardization of imaging protocols has been achieved across centers, driven in part by the Alzheimer’s Disease Neuroimaging Initiative (ADNI), now starting its fourth iteration.25,26 Despite significant differences in MRI scanners across individual institutions, these efforts have facilitated the development of comparable imaging acquisition protocols across centers. The inherent digital nature of MRI data sets has facilitated not only the sharing of the original imaging sequences, but also allows sharing of standardized quantitative measures of the brain. For example, MRI volumes are often run through a FreeSurfer pipeline that produces volumetric information on individual brain structures, cortical thickness, white matter / gray matter volume, among other detailed statistics.27–30
+
+While data sharing is also a key focus of the ADRC network, sharing the physical autopsy slide sets between research centers is often impractical. There is a great expense at properly packing and shipping large sets of glass slides between centers, although individual sections / blocks can reasonably be shared at a limited scale. Unlike MRI data sets, it is not feasible to “copy” autopsy case sets. However, with the wider availability of whole slide imaging (WSI) platforms, it is now feasible to share high resolution digital pathology images.31,32 These in turn can be utilized alongside machine learning / artificial intelligence (ML / AL) workflows to tackle questions that are otherwise difficult to solve by conventional or traditional approaches. For example, early work in this domain has shown that computational workflows can be exceptional at identifying neuropathological hallmarks of disease, such as Aβ plaques, at large scales.33–37 However, before similar studies can be replicated at scale across a large, diverse collection of images, it is imperative to begin developing a standardized data model to capture pre-analytic variables, as these have been denoted to alter machine learning algorithm outputs.36,38 ML models are notorious for making mistakes in unpredictable ways when being subject to novel images (i.e. different from images used during model training).39–42 Thus, it is to be expected that models trained on images from 5 µm sections would not have similar results when assessing images from 80 µm sections. Similarly, the different staining and / or sampling approaches between ADRCs might produce images that vary slightly or significantly when viewed through a ML workflow. Understanding the data is equally as important as developing the computational approach, and the results of this survey will help in understanding the depth of heterogeneity in the ADRC’s collective database.
+
+Conflicts of interest
+
+Dr. Gutman has done consulting work with Histowiz Inc LLC.
+
+Acknowledgements
+
+We would like to immensely thank the ADRC digital pathology working group, Dr. Jonathan D. Glass, Dr. Marla Gearing, Dr. Katherine L. Lucot, and Kevin Nzenkue for their helpful suggestions and feedback on this project.
+
+Funding
+
+This work was supported in part by grants from the National Institute on Aging (NIA) of the National Institutes of Health (NIH) under Award Numbers P30-AG066511-03S2, NIH U01 AG061357-04S1, P30AG072972, R01AG052132, R01AG056519, and R01AG062517.
+
+Supplementary Material
+
+Supplementary Material 1
+
+Supplementary Material 2
+
+Supplementary Document
+
+Github repository: https://github.com/Gutman-Lab/ADRC-np-survey-2023
+
+References
+
+1.	Carlos AF, Poloni TE, Medici V, et al. From brain collections to modern brain banks: A historical perspective. Alzheimers Dement 2019;5:52–60; doi: 10.1016/j.trci.2018.12.002.
+
+2.	Beach TG. Alzheimer’s disease and the “Valley Of Death”: not enough guidance from human brain tissue? J Alzheimers Dis 2013;33 Suppl 1:S219–33; doi: 10.3233/JAD-2012-129020.
+
+3.	Yong WH, Dry SM, Shabihkhani M. A practical approach to clinical and research biobanking. Methods Mol Biol 2014;1180:137–162; doi: 10.1007/978-1-4939-1050-2_8.
+
+4.	Anonymous. Alzheimer’s Disease Research Centers. n.d. Available from: https://www.nia.nih.gov/health/alzheimers-disease-research-centers [Last accessed: 2/8/2023].
+
+5.	Beekly DL, Ramos EM, van Belle G, et al. The National Alzheimer’s Coordinating Center (NACC) Database: an Alzheimer disease database. Alzheimer Dis Assoc Disord 2004;18(4):270–277.
+
+6.	Anonymous. RFA-AG-24-001: Alzheimer’s Disease Research Centers (P30 Clinical Trial Not Allowed). n.d. Available from: https://grants.nih.gov/grants/guide/rfa-files/RFA-AG-24-001.html [Last accessed: 1/31/2023].
+
+7.	Mirra SS, Heyman A, McKeel D, et al. The Consortium to Establish a Registry for Alzheimer’s Disease (CERAD). Part II. Standardization of the neuropathologic assessment of Alzheimer's disease. Neurology 1991;41(4):479–486; doi: 10.1212/wnl.41.4.479.
+
+8.	Braak H, Braak E. Neuropathological stageing of Alzheimer-related changes. Acta Neuropathol 1991;82(4):239–259.
+
+9.	Thal DR, Rüb U, Orantes M, et al. Phases of Aβ-deposition in the human brain and its relevance for the development of AD. Neurology 2002.
+
+10.	Attems J, Toledo JB, Walker L, et al. Neuropathological consensus criteria for the evaluation of Lewy pathology in post-mortem brains: a multi-centre study. Acta Neuropathol 2021;141(2):159–172; doi: 10.1007/s00401-020-02255-2.
+
+11.	Newell KL, Hyman BT, Growdon JH, et al. Application of the National Institute on Aging (NIA)-Reagan Institute criteria for the neuropathological diagnosis of Alzheimer disease. J Neuropathol Exp Neurol 1999;58(11):1147–1155; doi: 10.1097/00005072-199911000-00004.
+
+12.	Montine TJ, Phelps CH, Beach TG, et al. National Institute on Aging-Alzheimer’s Association guidelines for the neuropathologic assessment of Alzheimer's disease: a practical approach. Acta Neuropathol 2012;123(1):1–11; doi: 10.1007/s00401-011-0910-3.
+
+13.	Hyman BT, Phelps CH, Beach TG, et al. National Institute on Aging-Alzheimer’s Association guidelines for the neuropathologic assessment of Alzheimer's disease. Alzheimers Dement 2012;8(1):1–13; doi: 10.1016/j.jalz.2011.10.007.
+
+14.	Lucot KL, Suarez W, Mifflin K, et al. Assessment of Current Practices Across Alzheimer’s Disease Research Centers Biorepositories. Biopreserv Biobank 2022; doi: 10.1089/bio.2022.0022.
+
+15.	Shakir MN, Dugger BN. Advances in Deep Neuropathological Phenotyping of Alzheimer Disease: Past, Present, and Future. J Neuropathol Exp Neurol 2022;81(1):2–15; doi: 10.1093/jnen/nlab122.
+
+16.	King A, Bodi I, Troakes C. The Neuropathological Diagnosis of Alzheimer’s Disease-The Challenges of Pathological Mimics and Concomitant Pathology. Brain Sci 2020;10(8); doi: 10.3390/brainsci10080479.
+
+17.	Wilkinson MD, Dumontier M, Aalbersberg IJJ, et al. The FAIR Guiding Principles for scientific data management and stewardship. Sci Data 2016;3:160018; doi: 10.1038/sdata.2016.18.
+
+18.	Scalco R, Hamsafar Y, White CL, et al. The status of digital pathology and associated infrastructure within Alzheimer’s Disease Centers. J Neuropathol Exp Neurol 2023; doi: 10.1093/jnen/nlac127.
+
+19.	Anonymous. NACC’s Uniform Data Set, Alzheimer's Disease Research, NACC, Alzheimer's Disease Research, FTLD, NIA/NIH, Database, Neuropathology. n.d. Available from: https://www.alz.washington.edu/WEB/forms_uds.html [Last accessed: 3/28/2019].
+
+20.	Dervin J. Co-Planar Stereotaxic Atlas of the Human Brain 3-Dimensional Proportional System: An Approach to Cerebral Imaging 1988J. Talairich and P. Tournoux Mark Rayport Georg Thieme Verlag. Stuttgart, New York 3 13 711 701 1 Price DM 268. pp. 122. Illustrations 130. The Journal of Laryngology & Otology 1990;104(1):72–72; doi: 10.1017/S0022215100111879.
+
+21.	Evans AC, Janke AL, Collins DL, et al. Brain templates and atlases. Neuroimage 2012;62(2):911–922; doi: 10.1016/j.neuroimage.2012.01.024.
+
+22.	Mirra SS. The CERAD Neuropathology Protocol and Consensus Recommendations for the Postmortem Diagnosis of Alzheimer’s Disease: A Commentary. Neurobiol Aging 1997;18(4):S91–S94; doi: 10.1016/S0197-4580(97)00058-4.
+
+23.	Del Tredici K, Braak H. To stage, or not to stage. Curr Opin Neurobiol 2020;61:10–22; doi: 10.1016/j.conb.2019.11.008.
+
+24.	Beach TG, Monsell SE, Phillips LE, et al. Accuracy of the Clinical Diagnosis of Alzheimer Disease at National Institute on Aging Alzheimer Disease Centers, 2005–2010. J Neuropathol Exp Neurol 2012;71(4):266–273; doi: 10.1097/NEN.0b013e31824b211b.
+
+25.	Weiner MW, Veitch DP, Aisen PS, et al. Impact of the Alzheimer’s Disease Neuroimaging Initiative, 2004 to 2014. Alzheimers Dement 2015;11(7):865–884; doi: 10.1016/j.jalz.2015.04.005.
+
+26.	Weber CJ, Carrillo MC, Jagust W, et al. The Worldwide Alzheimer’s Disease Neuroimaging Initiative: ADNI-3 updates and global perspectives. Alzheimers Dement 2021;7(1):e12226; doi: 10.1002/trc2.12226.
+
+27.	Saygin ZM, Kliemann D, Iglesias JE, et al. High-resolution magnetic resonance imaging reveals nuclei of the human amygdala: manual segmentation to automatic atlas. Neuroimage 2017;155:370–382; doi: 10.1016/j.neuroimage.2017.04.046.
+
+28.	Hedges EP, Dimitrov M, Zahid U, et al. Reliability of structural MRI measurements: The effects of scan session, head tilt, inter-scan interval, acquisition sequence, FreeSurfer version and processing stream. Neuroimage 2022;246:118751; doi: 10.1016/j.neuroimage.2021.118751.
+
+29.	Mulder ER, de Jong RA, Knol DL, et al. Hippocampal volume change measurement: quantitative assessment of the reproducibility of expert manual outlining and the automated methods FreeSurfer and FIRST. Neuroimage 2014;92:169–181; doi: 10.1016/j.neuroimage.2014.01.058.
+
+30.	Fischl B. FreeSurfer. Neuroimage 2012;62(2):774–781; doi: 10.1016/j.neuroimage.2012.01.021.
+
+31.	Kumar N, Gupta R, Gupta S. Whole Slide Imaging (WSI) in Pathology: Current Perspectives and Future Directions. J Digit Imaging 2020;33(4):1034–1040; doi: 10.1007/s10278-020-00351-z.
+
+32.	Niazi MKK, Parwani AV, Gurcan MN. Digital pathology and artificial intelligence. Lancet Oncol 2019;20(5):e253–e261; doi: 10.1016/S1470-2045(19)30154-8.
+
+33.	Wong DR, Tang Z, Mew NC, et al. Deep Learning from Multiple Experts Improves Identification of Amyloid Neuropathologies. bioRxiv 2021;2021.03.12.435050; doi: 10.1101/2021.03.12.435050.
+
+34.	Vizcarra JC, Gearing M, Keiser MJ, et al. Validation of machine learning models to detect amyloid pathologies across institutions. Acta Neuropathol Commun 2020;8(1):59; doi: 10.1186/s40478-020-00927-4.
+
+35.	Tang Z, Chuang KV, DeCarli C, et al. Interpretable classification of Alzheimer’s disease pathologies with a convolutional neural network pipeline. Nat Commun 2019;10(1):2173; doi: 10.1038/s41467-019-10212-1.
+
+36.	Oliveira LC, Lai Z, Harvey D, et al. Preanalytic variable effects on segmentation and quantification machine learning algorithms for amyloid-β analyses on digitized human brain slides. J Neuropathol Exp Neurol 2023; doi: 10.1093/jnen/nlac132.
+
+37.	Signaevsky M, Prastawa M, Farrell K, et al. Artificial intelligence in neuropathology: deep learning-based assessment of tauopathy. Lab Invest 2019; doi: 10.1038/s41374-019-0202-4.
+
+38.	Jones AD, Graff JP, Darrow M, et al. Impact of pre-analytical variables on deep learning accuracy in histopathology. Histopathology 2019;75(1):39–53; doi: 10.1111/his.13844.
+
+39.	Finlayson SG, Bowers JD, Ito J, et al. Adversarial attacks on medical machine learning. Science 2019;363(6433):1287–1289; doi: 10.1126/science.aaw4399.
+
+40.	Eykholt K, Evtimov I, Fernandes E, et al. Robust Physical-World Attacks on Deep Learning Models. arXiv [csCR] 2017.
+
+41.	Cisse M, Adi Y, Neverova N, et al. Houdini: Fooling Deep Structured Prediction Models. arXiv [statML] 2017.
+
+42.	Szegedy C, Zaremba W, Sutskever I, et al. Intriguing Properties of Neural Networks. arXiv [csCV] 2013.
+
+Figures
+
+
+
+Figure 1. Heatmap showing number of centers using specific stains for different sampled regions. The vertical axis displays the 19 regions surveyed and the horizontal axis displays the major stains surveyed. The number in the heatmap signifies the number of centers that use the stain for that region. ɑ-Syn: alpha-synuclein, aβ: amyloid-beta, H&E: hematoxylin & eosin
+
+
+
+Figure 2. Bar plots showing the anatomical landmarks sampled in four brain regions. The dashed line represents the total number of submitted surveys (38). The dotted line represents the number of respondents that answered the question (varies per region). The N value in the vertical label corresponds to the value of the dotted line. All answers were non-mutually exclusive. MT: mammilo-thalamic, AC: anterior commissure, additional region landmark responses can be found in Supplementary Figure S1.
+
+
+
+Figure 3. For each region, the number of centers that sample the region via different sectioning approaches is shown using stacked bar plots. For 18 of the regions the survey asked if the centers sample the region after or before coronal slicing. For the cerebellum region, the options were: longitudinal, transversal, and coronal slicing. The numbers show the value of the stacked bar. The label in each bar is the brain region.
+

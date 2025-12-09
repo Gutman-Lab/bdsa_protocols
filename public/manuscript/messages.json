@@ -1,0 +1,10 @@
+[
+  {
+    "type": "warning",
+    "message": "Unrecognised paragraph style: 'Title' (Style ID: Title)"
+  },
+  {
+    "type": "warning",
+    "message": "Unrecognised paragraph style: 'Subtitle' (Style ID: Subtitle)"
+  }
+]

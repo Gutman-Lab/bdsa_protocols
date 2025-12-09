@@ -1,0 +1,78 @@
+.protocol-list {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+.protocol-list-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.protocol-list-empty {
+  padding: 3rem;
+  text-align: center;
+  color: #666;
+}
+
+.protocol-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.protocol-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.protocol-card-header h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.protocol-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.protocol-meta {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.protocol-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.protocol-description {
+  color: #666;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.protocol-dates {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.protocol-dates small {
+  color: #999;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .protocol-list {
+    grid-template-columns: 1fr;
+  }
+}
+

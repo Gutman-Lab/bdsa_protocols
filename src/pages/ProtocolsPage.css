@@ -1,0 +1,54 @@
+.protocols-page {
+  width: 100%;
+}
+
+.protocols-list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.protocols-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.protocols-header h2 {
+  font-size: 1.75rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.protocols-editor-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.protocols-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.protocols-editor-header h2 {
+  font-size: 1.75rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .protocols-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .protocols-editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
