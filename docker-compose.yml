@@ -1,0 +1,56 @@
+# BDSA Protocols stack: frontend, backend API, MongoDB
+# Usage: docker compose up -d
+
+services:
+  frontend:
+    build:
+      # Parent dir must contain bdsa_protocols/ and bdsa-react-components/
+      context: ..
+      dockerfile: bdsa_protocols/frontend/Dockerfile
+    container_name: bdsa-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: bdsa-admin
+    restart: unless-stopped
+    ports:
+      - "3002:80"
+
+  mongodb:
+    image: mongo:7
+    container_name: bdsa-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - bdsa_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bdsa-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      BDSA_MONGODB_URL: "mongodb://mongodb:27017"
+      BDSA_MONGODB_DB: "bdsa_protocols"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+volumes:
+  bdsa_mongo_data:

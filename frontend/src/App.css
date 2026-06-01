@@ -1,0 +1,10 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.route-loading {
+  color: #555;
+  padding: 1rem 0;
+}
+

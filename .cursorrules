@@ -1,0 +1,11 @@
+# Project Rules
+
+## Code Organization
+
+**File Length Limit:** Keep all source files under 1000 lines. If a file approaches or exceeds 1000 lines, refactor and split it into smaller, more focused files. This improves maintainability, readability, and makes the codebase easier to navigate.
+
+---
+
+## Reference Documentation
+
+For bdsa-react-components integration guide and API documentation, see: `CURSOR_INTEGRATION.md`

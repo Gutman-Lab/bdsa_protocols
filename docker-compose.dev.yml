@@ -1,0 +1,54 @@
+# Dev overrides: mounted source + hot reload
+# Run: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+# Or: docker compose up (if you use default override name docker-compose.override.yml)
+
+services:
+  frontend:
+    build:
+      # Parent dir must contain bdsa_protocols/ and bdsa-react-components/
+      context: ..
+      dockerfile: bdsa_protocols/frontend/Dockerfile.dev
+    volumes:
+      # Mount source so edits on host trigger Vite HMR
+      - ./frontend:/app
+      - ../bdsa-react-components:/bdsa-react-components:ro
+      # Keep container node_modules (don't overwrite with host)
+      - /app/node_modules
+    ports: !override
+      - "3000:3000"
+      - "3001:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BDSA_COMPONENTS_ROOT=/bdsa-react-components
+      - VITE_API_PROXY_TARGET=http://backend:8000
+      - VITE_HMR_CLIENT_PORT=3000
+    # Optional: run as non-root if your host user differs
+    # user: "${UID}:${GID}"
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./admin:/app
+      - /app/node_modules
+    ports:
+      - "3003:3002"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      # Mount app code for uvicorn --reload
+      - ./backend/app:/app/app
+      - ./backups:/app/backups
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    env_file:
+      - .env
+    environment:
+      BDSA_MONGODB_URL: "mongodb://mongodb:27017"
+      BDSA_MONGODB_DB: "bdsa_protocols"
+      BDSA_BACKUP_DIR: "/app/backups"

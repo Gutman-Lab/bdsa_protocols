@@ -1,0 +1,237 @@
+.block2region-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.block2region-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: #25282e;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.block2region-stats .stat {
+  color: #b0b3b8;
+}
+
+.block2region-stats .stat strong {
+  color: #e4e6eb;
+  margin-right: 0.25rem;
+}
+
+.block2region-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.block2region-controls .view-mode {
+  display: flex;
+  gap: 1rem;
+}
+
+.block2region-controls .view-mode label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  color: #e4e6eb;
+  cursor: pointer;
+}
+
+.block2region-controls .case-select {
+  padding: 0.4rem 0.75rem;
+  background: #25282e;
+  border: 1px solid #4a4d54;
+  border-radius: 4px;
+  color: #e4e6eb;
+  font-size: 0.875rem;
+  min-width: 14rem;
+}
+
+.block2region-empty {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: #25282e;
+  border-radius: 8px;
+  color: #8a8d92;
+  font-size: 0.875rem;
+}
+
+.block2region-versions {
+  padding: 1rem;
+  background: #25282e;
+  border-radius: 8px;
+}
+
+.block2region-versions h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  color: #b0b3b8;
+}
+
+.versions-loading,
+.versions-empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #8a8d92;
+}
+
+.versions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.versions-table th,
+.versions-table td {
+  padding: 0.4rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #3a3d44;
+}
+
+.versions-table th {
+  color: #8a8d92;
+  font-weight: 600;
+}
+
+.versions-table th.versions-th-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.versions-table th.versions-th-sortable:hover {
+  color: #b0b3b8;
+}
+
+.versions-table td {
+  color: #e4e6eb;
+}
+
+.restore-btn {
+  padding: 0.25rem 0.5rem;
+  background: #3a5a7a;
+  border: 1px solid #4a7aa0;
+  border-radius: 4px;
+  color: #e4e6eb;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.restore-btn:hover {
+  background: #4a6a8a;
+}
+
+/* Cases table (All cases view) */
+.block2region-cases-section {
+  padding: 1rem;
+  background: #25282e;
+  border-radius: 8px;
+}
+
+.block2region-cases-section h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  color: #b0b3b8;
+}
+
+.cases-loading,
+.cases-empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #8a8d92;
+}
+
+.cases-grid-wrap {
+  min-height: 200px;
+  height: 420px;
+  width: 100%;
+}
+
+.cases-grid-wrap.ag-theme-alpine {
+  --ag-border-color: #3a3d44;
+  --ag-header-background-color: #25282e;
+  --ag-odd-row-background-color: #25282e;
+  --ag-row-hover-color: #2d3038;
+}
+
+.cases-table-wrap {
+  overflow: auto;
+  min-height: 200px;
+  max-height: 420px;
+  border: 1px solid #3a3d44;
+  border-radius: 4px;
+}
+
+.cases-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.cases-table th,
+.cases-table td {
+  padding: 0.4rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #3a3d44;
+}
+
+/* Min widths so Year, Patient, Status don’t squash; horizontal scroll appears when needed */
+.cases-table th:nth-child(2),
+.cases-table td:nth-child(2) { min-width: 4.5rem; }   /* Year */
+.cases-table th:nth-child(3),
+.cases-table td:nth-child(3) { min-width: 9rem; }   /* Patient */
+.cases-table th:nth-child(7),
+.cases-table td:nth-child(7) { min-width: 8rem; }   /* Status */
+
+.cases-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.cases-table th {
+  color: #8a8d92;
+  font-weight: 600;
+  background: #25282e;
+  box-shadow: 0 1px 0 #3a3d44;
+}
+
+.cases-table th.cases-th-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.cases-table th.cases-th-sortable:hover {
+  color: #b0b3b8;
+}
+
+.cases-table th.cases-th-select {
+  width: 2.5rem;
+}
+
+.cases-table td {
+  color: #e4e6eb;
+}
+
+.cases-table tbody tr:hover {
+  background: #2d3038;
+}
+
+.cases-table tbody tr.cases-row-selected {
+  background: #2d3846;
+}
+
+.cases-table .cases-td-radio {
+  vertical-align: middle;
+}
+
+.cases-table .cases-td-radio input {
+  cursor: pointer;
+}

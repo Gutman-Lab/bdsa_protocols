@@ -1,0 +1,75 @@
+.data-view {
+  padding: 1rem;
+  background: #25282e;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.data-view h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #b0b3b8;
+}
+
+.data-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.data-view-toggles {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.data-view-toggles button {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #4a4d54;
+  background: #1a1d23;
+  color: #e4e6eb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.data-view-toggles button.active {
+  background: #3a5a7a;
+  border-color: #4a7aa0;
+}
+
+.data-view-loading,
+.data-view-error {
+  margin: 0;
+  color: #b0b3b8;
+}
+
+.data-view-error {
+  color: #e87474;
+}
+
+.data-view-json {
+  margin: 0;
+  padding: 1rem;
+  background: #1a1d23;
+  border-radius: 4px;
+  overflow: auto;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.data-view-grid-wrap {
+  height: 420px;
+  width: 100%;
+  min-height: 200px;
+}
+
+.data-view-grid-wrap.ag-theme-alpine {
+  --ag-border-color: #3a3d44;
+  --ag-header-background-color: #25282e;
+  --ag-odd-row-background-color: #25282e;
+  --ag-row-hover-color: #2d3038;
+}

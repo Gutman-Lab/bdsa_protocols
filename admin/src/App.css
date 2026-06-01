@@ -1,0 +1,134 @@
+.app {
+  min-height: 100vh;
+  padding: 0 1rem 2rem;
+}
+
+.app-header {
+  padding: 1rem 0;
+  border-bottom: 1px solid #3a3d44;
+}
+
+.app-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.app-header h1 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.app-backup-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.app-backup-btn {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.app-backup-btn:hover:not(:disabled) {
+  background: #1b5e20;
+}
+
+.app-backup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.app-backup-btn-secondary {
+  background: #455a64;
+}
+
+.app-backup-btn-secondary:hover:not(:disabled) {
+  background: #37474f;
+}
+
+.app-api {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #8a8d92;
+}
+
+.app-collection-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  flex-wrap: wrap;
+}
+
+.app-collection-bar label {
+  font-size: 0.875rem;
+  color: #b0b3b8;
+}
+
+.app-collection-bar select {
+  padding: 0.4rem 0.75rem;
+  background: #25282e;
+  border: 1px solid #4a4d54;
+  border-radius: 4px;
+  color: #e4e6eb;
+  font-size: 0.875rem;
+  min-width: 12rem;
+}
+
+.app-hint {
+  font-size: 0.8rem;
+  color: #8a8d92;
+}
+
+.app-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #3a3d44;
+}
+
+.app-tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid #4a4d54;
+  background: #25282e;
+  color: #e4e6eb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.app-tab:hover {
+  background: #2d3038;
+}
+
+.app-tab.active {
+  background: #3a5a7a;
+  border-color: #4a7aa0;
+}
+
+.app-main {
+  padding-top: 1rem;
+}
+
+.tab-placeholder {
+  padding: 2rem;
+  background: #25282e;
+  border-radius: 8px;
+  color: #8a8d92;
+}
+
+.tab-placeholder p {
+  margin: 0;
+}

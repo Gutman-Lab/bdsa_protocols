@@ -24,3 +24,19 @@ dist-ssr
 *.sw?
 
 manuscri*.docx
+
+# Python / backend
+__pycache__
+*.py[cod]
+.venv
+venv
+.env
+.env.local
+*.egg-info
+.pytest_cache
+.coverage
+htmlcov
+
+# Local Mongo JSON exports (admin backup)
+backups/*.json
+!backups/.gitkeep

@@ -1,0 +1,139 @@
+.protocols-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.protocols-toolbar {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.protocols-toolbar-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.protocols-collection-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.protocols-collection-select {
+  min-width: 220px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.protocols-new-collection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.protocols-new-collection input {
+  min-width: 200px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.protocols-rename-btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.protocols-rename-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.protocols-collection-id-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.protocols-collection-id-hint code {
+  font-size: 0.8rem;
+}
+
+.protocols-advanced-id {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.protocols-advanced-id summary {
+  cursor: pointer;
+  user-select: none;
+}
+
+.protocols-advanced-id-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.protocols-advanced-id-row input {
+  min-width: 220px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.protocols-use-id-btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #3498db;
+  background: #3498db;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.protocols-use-id-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.protocols-api-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.protocols-collections-error {
+  color: #c0392b;
+}
+
+.protocols-pick-collection {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .protocols-toolbar-main {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .protocols-collection-select,
+  .protocols-custom-id input {
+    width: 100%;
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "institution": "Pittsburgh",
+  "surveySource": "ADRC_Neuropath_Survey2026-06-01_14_41_40.csv",
+  "surveySubmissionDate": "Jun 9, 2022",
+  "surveyRole": "Neuropathology Core Leader",
+  "scanner": "Aperio / Leica",
+  "stainProtocols": [
+    {
+      "id": "pittsburgh_he",
+      "type": "stain",
+      "name": "Pittsburgh H&E",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Standard histology.",
+      "stainType": "HE",
+      "chemistry": "dye binding"
+    },
+    {
+      "id": "pittsburgh_abeta",
+      "type": "stain",
+      "name": "Pittsburgh amyloid beta (unknown)",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Survey: NAB228",
+      "stainType": "aBeta",
+      "antibody": "unknown",
+      "phosphoSpecific": "no",
+      "chromogen": "AEC (Red)"
+    },
+    {
+      "id": "pittsburgh_tau",
+      "type": "stain",
+      "name": "Pittsburgh tau (PHF1)",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Survey: PHF1 Peter Davies",
+      "stainType": "Tau",
+      "antibody": "PHF1",
+      "phosphoSpecific": "yes",
+      "chromogen": "AEC (Red)"
+    },
+    {
+      "id": "pittsburgh_asyn",
+      "type": "stain",
+      "name": "Pittsburgh alpha-synuclein (LB509)",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Survey: Non-phospho specific LB509",
+      "stainType": "aSyn",
+      "antibody": "LB509",
+      "phosphoSpecific": "no",
+      "chromogen": "AEC (Red)"
+    },
+    {
+      "id": "pittsburgh_tdp43",
+      "type": "stain",
+      "name": "Pittsburgh TDP-43 (1D3)",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Survey: Phospho-specific 1D3",
+      "stainType": "TDP-43",
+      "antibody": "1D3",
+      "phosphoSpecific": "yes",
+      "chromogen": "AEC (Red)"
+    },
+    {
+      "id": "pittsburgh_silver_bielschowsky",
+      "type": "stain",
+      "name": "Pittsburgh silver (Bielschowsky)",
+      "description": "Derived from Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). hematoxylin counterstain; chromogen AEC (Red); Nova red chromogen. \nWill switch from manual to automated staining with DAB chromogen in about 2 months. Survey label: Silver stain; mapped to Bielschowsky in Pitt schema.",
+      "stainType": "Bielschowsky",
+      "chemistry": "silver impregnation"
+    }
+  ],
+  "regionProtocols": [
+    {
+      "id": "pittsburgh_region_posterior_hippocampus",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Posterior hippocampus",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, TDP-43, Silver, P62 added for FTLD/ALS; Alpha synuclein added when screening sections positive. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Hippocampus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "CA1-4 with dentate gyrus",
+        "Parahippocampal gyrus",
+        "Tail of caudate",
+        "Lateral geniculate nucleus",
+        "Occipital temporal gyrus"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_anterior_cingulate",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Anterior cingulate",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Alpha synuclein added when screening section positive. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Ant_Cingulate",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Corpus callosum",
+        "Caudate head"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_amygdala",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Amygdala",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein, TDP-43. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Amygdala",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Entorhinal cortex"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_midbrain",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Midbrain",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Midbrain",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "3rd cranial nerve",
+        "Substantia nigra"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_pons",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Pons",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Pons",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Locus coeruleus",
+        "Pontine base / fibers"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_medulla",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Medulla",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein, TDP added for FTLD/ALS cases. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Medulla",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Dorsal motor nucleus of vagus",
+        "Hypoglossal nucleus",
+        "Inferior olive",
+        "Pyramid"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_frontal_gyrus",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Frontal gyrus",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Silver, Alpha synuclein added when screening sections positive. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Frontal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Superior",
+        "Middle"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_temporal_lobe",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Temporal lobe",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Silver, Alpha synuclein added when screening sections positive. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Temporal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Superior",
+        "Middle"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_parietal_gyrus",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Parietal gyrus",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Silver, Alpha synuclein added if screening sections positive. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Parietal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Inferior"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_visual_cortex_occipital",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Visual cortex (occipital)",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Silver, Alpha synuclein added when screening sections positive. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Line of Gennari (BA17), BA18.",
+      "regionType": "Occipital",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Line of Gennari (BA17)",
+        "BA18"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_striatum_basal_ganglia",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Striatum (basal ganglia)",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Anterior Commissure, Nucleus Basalis of Meynert, Globus Pallidus, Caudate, Internal Capsule, External Capsule, Putamen, Nucleus Accumbens, 2 sections taken, at level of accumbens and at level of anterior commissure.",
+      "regionType": "Basal_Ganglia",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Anterior Commissure",
+        "Nucleus Basalis of Meynert",
+        "Globus Pallidus",
+        "Caudate",
+        "Internal Capsule",
+        "External Capsule",
+        "Putamen",
+        "Nucleus Accumbens",
+        "2 sections taken, at level of accumbens and at level of anterior commissure"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_thalamus",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Thalamus",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, Tau Stain. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Thalamus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Mammillary body",
+        "Subthalamic nucleus",
+        "Anterior nucleus of thalamus",
+        "Two coronal levels collected"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_cerebellum",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Cerebellum",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, A\u03b2 Stain, Tau, p62 and synuclein added as needed. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Cerebellum",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0,
+      "landmarks": [
+        "Dentate",
+        "Cortex"
+      ]
+    },
+    {
+      "id": "pittsburgh_region_central_gyri_motor_cortex",
+      "type": "region",
+      "name": "Pittsburgh \u2014 Central gyri (motor cortex)",
+      "description": "From Pittsburgh ADRC Neuropath Survey (Jun 9, 2022). Survey stains: H&E, TDP and tau staining done as needed for FTLD and CTE cases. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Motor_cortex",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 4.0
+    }
+  ],
+  "notes": [
+    "P62 / CD68 / other survey stains may not have Pitt schema stain types \u2014 see region descriptions.",
+    "Antibody fields that only say phospho/non-phospho are resolved from vendor/clone columns.",
+    "Regions marked Not Collected in the survey are omitted."
+  ]
+}

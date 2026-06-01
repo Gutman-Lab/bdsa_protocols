@@ -1,0 +1,266 @@
+{
+  "institution": "Emory University",
+  "surveySource": "ADRC_Neuropath_Survey2026-06-01_14_41_40.csv",
+  "surveySubmissionDate": "Aug 17, 2022",
+  "surveyRole": "NP Core Co-Leader",
+  "scanner": "Aperio / Leica",
+  "stainProtocols": [
+    {
+      "id": "emory_he",
+      "type": "stain",
+      "name": "Emory University H&E",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Standard histology.",
+      "stainType": "HE",
+      "chemistry": "dye binding"
+    },
+    {
+      "id": "emory_abeta",
+      "type": "stain",
+      "name": "Emory University amyloid beta (4G8)",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Survey: 4G8",
+      "stainType": "aBeta",
+      "antibody": "4G8",
+      "phosphoSpecific": "no",
+      "chromogen": "DAB (Brown)"
+    },
+    {
+      "id": "emory_tau",
+      "type": "stain",
+      "name": "Emory University tau (PHF1)",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Survey: PHF1",
+      "stainType": "Tau",
+      "antibody": "PHF1",
+      "phosphoSpecific": "yes",
+      "chromogen": "DAB (Brown)"
+    },
+    {
+      "id": "emory_asyn",
+      "type": "stain",
+      "name": "Emory University alpha-synuclein (unknown)",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Survey: Phospho-specific WAKO 015-25191, clone Syn #64",
+      "stainType": "aSyn",
+      "antibody": "unknown",
+      "phosphoSpecific": "yes",
+      "chromogen": "DAB (Brown)"
+    },
+    {
+      "id": "emory_tdp43",
+      "type": "stain",
+      "name": "Emory University TDP-43 (unknown)",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Survey: Phospho-specific Cosmo Bio  TIP-PTD-P02",
+      "stainType": "TDP-43",
+      "antibody": "unknown",
+      "phosphoSpecific": "yes",
+      "chromogen": "DAB (Brown)",
+      "vendor": "Cosmo"
+    },
+    {
+      "id": "emory_silver_bielschowsky",
+      "type": "stain",
+      "name": "Emory University silver (Bielschowsky)",
+      "description": "Derived from Emory University ADRC Neuropath Survey (Aug 17, 2022). hematoxylin counterstain; chromogen DAB (Brown). Survey label: Silver stain; mapped to Bielschowsky in Pitt schema.",
+      "stainType": "Bielschowsky",
+      "chemistry": "silver impregnation"
+    }
+  ],
+  "regionProtocols": [
+    {
+      "id": "emory_region_posterior_hippocampus",
+      "type": "region",
+      "name": "Emory University \u2014 Posterior hippocampus",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Hippocampus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "CA1-4 with dentate gyrus",
+        "Parahippocampal gyrus",
+        "Lateral geniculate nucleus"
+      ]
+    },
+    {
+      "id": "emory_region_anterior_cingulate",
+      "type": "region",
+      "name": "Emory University \u2014 Anterior cingulate",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Ant_Cingulate",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Corpus callosum"
+      ]
+    },
+    {
+      "id": "emory_region_amygdala",
+      "type": "region",
+      "name": "Emory University \u2014 Amygdala",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Amygdala",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Entorhinal cortex"
+      ]
+    },
+    {
+      "id": "emory_region_midbrain",
+      "type": "region",
+      "name": "Emory University \u2014 Midbrain",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Midbrain",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Substantia nigra"
+      ]
+    },
+    {
+      "id": "emory_region_pons",
+      "type": "region",
+      "name": "Emory University \u2014 Pons",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Pons",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Locus coeruleus",
+        "Pontine base / fibers"
+      ]
+    },
+    {
+      "id": "emory_region_medulla",
+      "type": "region",
+      "name": "Emory University \u2014 Medulla",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Medulla",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Dorsal motor nucleus of vagus",
+        "Inferior olive",
+        "Pyramid"
+      ]
+    },
+    {
+      "id": "emory_region_frontal_gyrus",
+      "type": "region",
+      "name": "Emory University \u2014 Frontal gyrus",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Frontal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Inferior"
+      ]
+    },
+    {
+      "id": "emory_region_temporal_lobe",
+      "type": "region",
+      "name": "Emory University \u2014 Temporal lobe",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Temporal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Superior",
+        "Middle"
+      ]
+    },
+    {
+      "id": "emory_region_parietal_gyrus",
+      "type": "region",
+      "name": "Emory University \u2014 Parietal gyrus",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43, Silver. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Parietal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Middle"
+      ]
+    },
+    {
+      "id": "emory_region_visual_cortex_occipital",
+      "type": "region",
+      "name": "Emory University \u2014 Visual cortex (occipital)",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, Silver. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Line of Gennari (BA17), BA18.",
+      "regionType": "Occipital",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Line of Gennari (BA17)",
+        "BA18"
+      ]
+    },
+    {
+      "id": "emory_region_striatum_basal_ganglia",
+      "type": "region",
+      "name": "Emory University \u2014 Striatum (basal ganglia)",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Anterior Commissure, Nucleus Basalis of Meynert, Globus Pallidus, Caudate, Internal Capsule, Putamen.",
+      "regionType": "Basal_Ganglia",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Anterior Commissure",
+        "Nucleus Basalis of Meynert",
+        "Globus Pallidus",
+        "Caudate",
+        "Internal Capsule",
+        "Putamen"
+      ]
+    },
+    {
+      "id": "emory_region_thalamus",
+      "type": "region",
+      "name": "Emory University \u2014 Thalamus",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, Tau Stain. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Thalamus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Mammillary body",
+        "Subthalamic nucleus"
+      ]
+    },
+    {
+      "id": "emory_region_cerebellum",
+      "type": "region",
+      "name": "Emory University \u2014 Cerebellum",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, P62. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Cerebellum",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0,
+      "landmarks": [
+        "Dentate",
+        "Cortex"
+      ]
+    },
+    {
+      "id": "emory_region_central_gyri_motor_cortex",
+      "type": "region",
+      "name": "Emory University \u2014 Central gyri (motor cortex)",
+      "description": "From Emory University ADRC Neuropath Survey (Aug 17, 2022). Survey stains: H&E, depends on the case. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Motor_cortex",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 8.0
+    }
+  ],
+  "notes": [
+    "P62 / CD68 / other survey stains may not have Pitt schema stain types \u2014 see region descriptions.",
+    "Antibody fields that only say phospho/non-phospho are resolved from vendor/clone columns.",
+    "Regions marked Not Collected in the survey are omitted."
+  ]
+}

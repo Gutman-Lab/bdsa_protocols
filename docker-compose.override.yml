@@ -1,0 +1,43 @@
+# Auto-loaded by `docker compose up` (merged with docker-compose.yml).
+# Dev: bind mounts, Vite on :3000, uvicorn --reload.
+# Production-only: rename or delete this file, then `docker compose up`.
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: bdsa_protocols/frontend/Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+      - ../bdsa-react-components:/bdsa-react-components:ro
+      - /app/node_modules
+    ports: !override
+      - "3000:3000"
+      - "3001:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BDSA_COMPONENTS_ROOT=/bdsa-react-components
+      - VITE_API_PROXY_TARGET=http://backend:8000
+      - VITE_HMR_CLIENT_PORT=3000
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./admin:/app
+      - /app/node_modules
+    ports:
+      - "3003:3002"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  backend:
+    volumes:
+      - ./backend/app:/app/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    env_file:
+      - .env
+    environment:
+      BDSA_MONGODB_URL: "mongodb://mongodb:27017"
+      BDSA_MONGODB_DB: "bdsa_protocols"

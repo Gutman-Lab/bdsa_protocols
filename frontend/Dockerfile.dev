@@ -1,0 +1,22 @@
+# Dev image: install deps; source mounted at /app at run time.
+# Build from repo parent so bdsa-react-components is available:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml build frontend
+# (compose sets context: .. and dockerfile: bdsa_protocols/frontend/Dockerfile.dev)
+
+FROM node:20-alpine
+
+# Build linked component library (ProtocolManager, etc.)
+WORKDIR /deps/bdsa-react-components
+COPY bdsa-react-components/package.json bdsa-react-components/package-lock.json* ./
+RUN npm install
+COPY bdsa-react-components/ ./
+RUN npx vite build
+
+WORKDIR /app
+COPY bdsa_protocols/frontend/package.json ./
+# Install against built package in the image (node_modules kept via compose volume)
+RUN npm install /deps/bdsa-react-components \
+    && npm install
+
+EXPOSE 3000
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

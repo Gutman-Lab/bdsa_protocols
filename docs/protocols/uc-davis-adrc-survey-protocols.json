@@ -1,0 +1,269 @@
+{
+  "institution": "UC Davis",
+  "surveySource": "ADRC_Neuropath_Survey2026-06-01_14_41_40.csv",
+  "surveySubmissionDate": "Jun 29, 2022",
+  "surveyRole": "Neuropathology Core Leader",
+  "scanner": "Zeiss",
+  "stainProtocols": [
+    {
+      "id": "uc-davis_he",
+      "type": "stain",
+      "name": "UC Davis H&E",
+      "description": "Derived from UC Davis ADRC Neuropath Survey (Jun 29, 2022). hematoxylin counterstain; chromogen DAB (Brown); We current utilize our hospital based Histology laboratory- services and rates are located here: https://health.ucdavis.edu/pathology/research/research_labs/histology/index.html. Standard histology.",
+      "stainType": "HE",
+      "chemistry": "dye binding"
+    },
+    {
+      "id": "uc-davis_abeta",
+      "type": "stain",
+      "name": "UC Davis amyloid beta (4G8)",
+      "description": "Derived from UC Davis ADRC Neuropath Survey (Jun 29, 2022). hematoxylin counterstain; chromogen DAB (Brown); We current utilize our hospital based Histology laboratory- services and rates are located here: https://health.ucdavis.edu/pathology/research/research_labs/histology/index.html. Survey: 4G8 Covance Cat # SIG-39200",
+      "stainType": "aBeta",
+      "antibody": "4G8",
+      "phosphoSpecific": "no",
+      "chromogen": "DAB (Brown)",
+      "vendor": "Covance"
+    },
+    {
+      "id": "uc-davis_tau",
+      "type": "stain",
+      "name": "UC Davis tau (AT8)",
+      "description": "Derived from UC Davis ADRC Neuropath Survey (Jun 29, 2022). hematoxylin counterstain; chromogen DAB (Brown); We current utilize our hospital based Histology laboratory- services and rates are located here: https://health.ucdavis.edu/pathology/research/research_labs/histology/index.html. Survey: AT8 Thermo scientific Cat #MN1020",
+      "stainType": "Tau",
+      "antibody": "AT8",
+      "phosphoSpecific": "yes",
+      "chromogen": "DAB (Brown)",
+      "vendor": "Thermo"
+    },
+    {
+      "id": "uc-davis_asyn",
+      "type": "stain",
+      "name": "UC Davis alpha-synuclein (unknown)",
+      "description": "Derived from UC Davis ADRC Neuropath Survey (Jun 29, 2022). hematoxylin counterstain; chromogen DAB (Brown); We current utilize our hospital based Histology laboratory- services and rates are located here: https://health.ucdavis.edu/pathology/research/research_labs/histology/index.html. Survey: Non-phospho specific Invitrogen cat #18-0215  (although having supply chain issues to exploring alternative options)",
+      "stainType": "aSyn",
+      "antibody": "unknown",
+      "phosphoSpecific": "no",
+      "chromogen": "DAB (Brown)"
+    },
+    {
+      "id": "uc-davis_tdp43",
+      "type": "stain",
+      "name": "UC Davis TDP-43 (unknown)",
+      "description": "Derived from UC Davis ADRC Neuropath Survey (Jun 29, 2022). hematoxylin counterstain; chromogen DAB (Brown); We current utilize our hospital based Histology laboratory- services and rates are located here: https://health.ucdavis.edu/pathology/research/research_labs/histology/index.html. Survey: Non-phospho specific Novus Biologicals Cat # H00023435-M01",
+      "stainType": "TDP-43",
+      "antibody": "unknown",
+      "phosphoSpecific": "no",
+      "chromogen": "DAB (Brown)",
+      "vendor": "Novus"
+    }
+  ],
+  "regionProtocols": [
+    {
+      "id": "uc-davis_region_posterior_hippocampus",
+      "type": "region",
+      "name": "UC Davis \u2014 Posterior hippocampus",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, Tau Stain, TDP-43. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Hippocampus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "CA1-4 with dentate gyrus",
+        "Parahippocampal gyrus",
+        "Occipital temporal gyrus"
+      ]
+    },
+    {
+      "id": "uc-davis_region_anterior_cingulate",
+      "type": "region",
+      "name": "UC Davis \u2014 Anterior cingulate",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Ant_Cingulate",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Corpus callosum"
+      ]
+    },
+    {
+      "id": "uc-davis_region_amygdala",
+      "type": "region",
+      "name": "UC Davis \u2014 Amygdala",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, Tau Stain, \u03b1-Synuclein, TDP-43. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Amygdala",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Entorhinal cortex"
+      ]
+    },
+    {
+      "id": "uc-davis_region_midbrain",
+      "type": "region",
+      "name": "UC Davis \u2014 Midbrain",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Midbrain",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "3rd cranial nerve",
+        "Substantia nigra",
+        "Red nucleus",
+        "Superior colliculus"
+      ]
+    },
+    {
+      "id": "uc-davis_region_pons",
+      "type": "region",
+      "name": "UC Davis \u2014 Pons",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Pons",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Superior cerebellar peduncle",
+        "Locus coeruleus",
+        "Pontine base / fibers"
+      ]
+    },
+    {
+      "id": "uc-davis_region_medulla",
+      "type": "region",
+      "name": "UC Davis \u2014 Medulla",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, \u03b1-Synuclein. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Medulla",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Dorsal motor nucleus of vagus",
+        "Hypoglossal nucleus",
+        "Inferior olive",
+        "Pyramid"
+      ]
+    },
+    {
+      "id": "uc-davis_region_frontal_gyrus",
+      "type": "region",
+      "name": "UC Davis \u2014 Frontal gyrus",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, \u03b1-Synuclein, TDP-43. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Frontal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Superior",
+        "Middle"
+      ]
+    },
+    {
+      "id": "uc-davis_region_temporal_lobe",
+      "type": "region",
+      "name": "UC Davis \u2014 Temporal lobe",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain, TDP-43. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Temporal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Superior",
+        "Middle",
+        "Inferior"
+      ]
+    },
+    {
+      "id": "uc-davis_region_parietal_gyrus",
+      "type": "region",
+      "name": "UC Davis \u2014 Parietal gyrus",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Parietal",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Super"
+      ]
+    },
+    {
+      "id": "uc-davis_region_visual_cortex_occipital",
+      "type": "region",
+      "name": "UC Davis \u2014 Visual cortex (occipital)",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, Tau Stain. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Line of Gennari (BA17), BA18.",
+      "regionType": "Occipital",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Line of Gennari (BA17)",
+        "BA18"
+      ]
+    },
+    {
+      "id": "uc-davis_region_striatum_basal_ganglia",
+      "type": "region",
+      "name": "UC Davis \u2014 Striatum (basal ganglia)",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain. Sampling per survey (typically after coronal slicing when indicated). Survey landmarks: Anterior Commissure, Nucleus Basalis of Meynert, Globus Pallidus, Caudate, Internal Capsule, External Capsule, Putamen.",
+      "regionType": "Basal_Ganglia",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Anterior Commissure",
+        "Nucleus Basalis of Meynert",
+        "Globus Pallidus",
+        "Caudate",
+        "Internal Capsule",
+        "External Capsule",
+        "Putamen"
+      ]
+    },
+    {
+      "id": "uc-davis_region_thalamus",
+      "type": "region",
+      "name": "UC Davis \u2014 Thalamus",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Thalamus",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Mammillary body",
+        "Mammilo-thalmaic tract"
+      ]
+    },
+    {
+      "id": "uc-davis_region_cerebellum",
+      "type": "region",
+      "name": "UC Davis \u2014 Cerebellum",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E, A\u03b2 Stain, Tau Stain. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Cerebellum",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0,
+      "landmarks": [
+        "Dentate",
+        "Vermis",
+        "Cortex"
+      ]
+    },
+    {
+      "id": "uc-davis_region_central_gyri_motor_cortex",
+      "type": "region",
+      "name": "UC Davis \u2014 Central gyri (motor cortex)",
+      "description": "From UC Davis ADRC Neuropath Survey (Jun 29, 2022). Survey stains: H&E. Sampling per survey (typically after coronal slicing when indicated).",
+      "regionType": "Motor_cortex",
+      "hemisphere": "left",
+      "sliceOrientation": "coronal",
+      "sliceThickness": 6.0
+    }
+  ],
+  "notes": [
+    "P62 / CD68 / other survey stains may not have Pitt schema stain types \u2014 see region descriptions.",
+    "Antibody fields that only say phospho/non-phospho are resolved from vendor/clone columns.",
+    "Regions marked Not Collected in the survey are omitted."
+  ]
+}

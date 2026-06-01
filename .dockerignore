@@ -1,0 +1,6 @@
+# Build context for dev frontend (context: ..)
+**/node_modules
+**/.git
+**/dist
+**/.env
+**/.env.*

@@ -1,0 +1,4 @@
+# Used only when build context is ./frontend (production Dockerfile).
+node_modules
+dist
+.git
