@@ -61,7 +61,8 @@ export default function SchemaPage() {
       <div className="schema-page-intro">
         <h2>BDSA Schema</h2>
         <p>
-          Pitt BDSA split JSON schemas (clinical, region, stain, slide-level). Source:{' '}
+          Pitt BDSA split JSON schemas (clinical, region, stain, slide-level). Served via{' '}
+          <code>/api/schemas</code>; source:{' '}
           <a
             href="https://github.com/pitt-bdsa/bdsa/tree/main/girder-plugins/girder-bdsa/girder_bdsa/schemas"
             target="_blank"

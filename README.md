@@ -92,7 +92,7 @@ backend/                   # FastAPI + MongoDB API
 ├── app/
 └── Dockerfile
 
-docs/                      # Project docs (e.g. CURSOR_INTEGRATION.md)
+docs/                      # Project docs — see docs/README.md
 docker-compose.yml         # frontend, backend, mongodb
 ```
 
@@ -103,7 +103,7 @@ This project uses the following components from `bdsa-react-components`:
 - `Card` - For displaying protocol cards and content containers
 - `Button` - For actions throughout the application
 
-See `docs/CURSOR_INTEGRATION.md` for complete API documentation.
+See `docs/API.md` for REST API usage and **API key auth from external servers**. See `docs/CURSOR_INTEGRATION.md` for bdsa-react-components integration.
 
 ## Manuscript content integration
 

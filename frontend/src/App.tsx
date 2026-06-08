@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/Layout'
 import DocumentationPage from './pages/DocumentationPage'
 import SchemaPage from './pages/SchemaPage'
+import SlideMappingsPage from './pages/SlideMappingsPage'
 import './App.css'
 
 const ProtocolsPage = lazy(() => import('./pages/ProtocolsPage'))
@@ -13,7 +14,7 @@ function PageFallback() {
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Layout>
         <Suspense fallback={<PageFallback />}>
           <Routes>
@@ -21,6 +22,7 @@ function App() {
             <Route path="/protocols" element={<ProtocolsPage />} />
             <Route path="/documentation" element={<DocumentationPage />} />
             <Route path="/schema" element={<SchemaPage />} />
+            <Route path="/slide-mappings" element={<SlideMappingsPage />} />
             <Route path="*" element={<Navigate to="/protocols" replace />} />
           </Routes>
         </Suspense>

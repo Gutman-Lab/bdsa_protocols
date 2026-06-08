@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     dsa_api_url: str | None = Field(default=None, validation_alias="DSA_API_URL")
     dsa_api_key: str | None = Field(default=None, validation_alias="DSA_API_KEY")
 
+    # Shared secret for /api routes (header X-API-Key). Unset = no auth (local dev only).
+    api_key: str | None = None
+
     model_config = {
         "env_prefix": "BDSA_",
         "env_file": ".env",

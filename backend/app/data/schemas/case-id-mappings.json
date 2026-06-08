@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdsa.io/schemas/case-id-mappings.json",
+  "title": "Case ID mappings",
+  "description": "Per-collection registry mapping center-local case IDs to canonical BDSA case IDs, with optional crosswalks to external identifier systems (e.g. NACC).",
+  "type": "object",
+  "properties": {
+    "institutionId": {
+      "type": "string",
+      "description": "Three-digit BDSA institution code used when allocating BDSA case IDs (e.g. 002 for U. Kentucky)."
+    },
+    "mappings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mapping" }
+    },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+    "source": { "type": "string" },
+    "version": { "type": "string" },
+    "totalMappings": { "type": "integer", "minimum": 0 }
+  },
+  "required": ["institutionId", "mappings"],
+  "$defs": {
+    "mapping": {
+      "type": "object",
+      "properties": {
+        "localCaseId": {
+          "type": "string",
+          "description": "Center-local case identifier (e.g. R1290)."
+        },
+        "bdsaCaseId": {
+          "type": "string",
+          "pattern": "^BDSA-\\d{3}-\\d{5}$",
+          "description": "Canonical BDSA case ID (BDSA-{institution}-{sequence})."
+        },
+        "alternateIds": {
+          "type": "object",
+          "description": "Optional crosswalk to external identifier systems. Keys are lowercase system names; values are the external ID string.",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          },
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "examples": [
+            { "nacc": "U1234567" },
+            { "nacc": "U1234567", "ndd": "NDD-42" }
+          ]
+        }
+      },
+      "required": ["localCaseId", "bdsaCaseId"],
+      "additionalProperties": true
+    },
+    "knownSystems": {
+      "description": "Documented alternate ID system keys (extensible; any lowercase key is accepted).",
+      "type": "object",
+      "properties": {
+        "nacc": {
+          "type": "string",
+          "description": "NACC case ID (see clinical-metadata.json NACCID)."
+        },
+        "ndd": {
+          "type": "string",
+          "description": "National Alzheimer's Coordinating Center neuropathology / NDD identifier when distinct from NACCID."
+        }
+      }
+    }
+  }
+}

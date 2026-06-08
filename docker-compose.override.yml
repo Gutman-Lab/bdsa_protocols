@@ -18,7 +18,14 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - BDSA_COMPONENTS_ROOT=/bdsa-react-components
       - VITE_API_PROXY_TARGET=http://backend:8000
-      - VITE_HMR_CLIENT_PORT=3000
+      # When using an HTTPS reverse proxy (e.g. schema.bdsa.io), set in .env:
+      # VITE_HMR_HOST=schema.bdsa.io
+      # VITE_HMR_CLIENT_PORT=443
+      # VITE_HMR_PROTOCOL=wss
+      - VITE_HMR_HOST=${VITE_HMR_HOST:-localhost}
+      - VITE_HMR_CLIENT_PORT=${VITE_HMR_CLIENT_PORT:-3000}
+      - VITE_HMR_PROTOCOL=${VITE_HMR_PROTOCOL:-}
+      - VITE_BDSA_API_KEY=${BDSA_API_KEY:-}
 
   admin:
     build:
@@ -31,6 +38,7 @@ services:
       - "3003:3002"
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - VITE_BDSA_API_KEY=${BDSA_API_KEY:-}
 
   backend:
     volumes:

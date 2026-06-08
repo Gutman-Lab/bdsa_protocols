@@ -12,6 +12,10 @@ const componentsRoot = process.env.BDSA_COMPONENTS_ROOT
 const componentsEntry = path.join(componentsRoot, 'src/index.ts')
 const componentsStyles = path.join(componentsRoot, 'dist/index.css')
 
+const hmrHost = process.env.VITE_HMR_HOST || 'localhost'
+const hmrClientPort = Number(process.env.VITE_HMR_CLIENT_PORT || 3000)
+const hmrProtocol = process.env.VITE_HMR_PROTOCOL as 'ws' | 'wss' | undefined
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -30,17 +34,19 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
+    allowedHosts: ['schema.bdsa.io'],
     strictPort: true,
     open: process.env.VITE_OPEN_BROWSER === 'true',
     fs: {
-      allow: [frontendRoot, componentsRoot, path.join(componentsRoot, '..')],
+      allow: [frontendRoot, componentsRoot, path.join(componentsRoot, '..'), path.join(componentsRoot, 'old-src')],
     },
     watch: {
       usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     },
     hmr: {
-      host: 'localhost',
-      clientPort: Number(process.env.VITE_HMR_CLIENT_PORT || 3000),
+      host: hmrHost,
+      clientPort: hmrClientPort,
+      ...(hmrProtocol ? { protocol: hmrProtocol } : {}),
     },
     proxy: {
       '/api': {

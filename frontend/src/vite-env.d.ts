@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly VITE_API_URL: string
   readonly VITE_DEFAULT_COLLECTION_ID: string
+  readonly VITE_BDSA_API_KEY: string
 }
 
 interface ImportMeta {

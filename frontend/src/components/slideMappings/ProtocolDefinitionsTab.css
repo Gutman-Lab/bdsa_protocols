@@ -1,0 +1,79 @@
+.protocol-definitions-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.protocol-def-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.protocol-def-card {
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  background: #fff;
+  padding: 1rem 1.1rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.protocol-def-card-highlighted {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.protocol-def-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.protocol-def-card-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1a2a3a;
+  line-height: 1.35;
+}
+
+.protocol-def-card-header code {
+  font-size: 0.78rem;
+  color: #1a237e;
+  background: #e8edf5;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  align-self: flex-start;
+}
+
+.protocol-def-description {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.45;
+}
+
+.protocol-def-dl {
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.protocol-def-row {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.protocol-def-row dt {
+  margin: 0;
+  font-weight: 600;
+  color: #5a6a7a;
+}
+
+.protocol-def-row dd {
+  margin: 0;
+  color: #2c3e50;
+  word-break: break-word;
+}

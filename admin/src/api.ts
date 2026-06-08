@@ -1,12 +1,25 @@
 const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '') || 'http://localhost:8000'
+const API_KEY = (import.meta.env.VITE_BDSA_API_KEY || '').trim()
 
 export function getApiUrl(): string {
   return API_URL
 }
 
+function apiHeaders(extra?: HeadersInit): Headers {
+  const headers = new Headers(extra)
+  if (API_KEY) {
+    headers.set('X-API-Key', API_KEY)
+  }
+  return headers
+}
+
+async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
+  return fetch(url, { ...init, headers: apiHeaders(init?.headers) })
+}
+
 export async function fetchApi<T = unknown>(path: string): Promise<T> {
   const url = `${API_URL}${path.startsWith('/') ? path : `/${path}`}`
-  const res = await fetch(url)
+  const res = await apiFetch(url)
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`API ${res.status}: ${text || res.statusText}`)
@@ -36,7 +49,7 @@ function filenameFromContentDisposition(header: string | null): string | null {
 /** Download full Mongo export as a JSON file in the browser. */
 export async function downloadMongoBackup(): Promise<{ filename: string; counts: Record<string, number> }> {
   const url = `${API_URL}/api/admin/backup`
-  const res = await fetch(url)
+  const res = await apiFetch(url)
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`API ${res.status}: ${text || res.statusText}`)
@@ -67,7 +80,7 @@ export async function saveMongoBackupOnServer(): Promise<{
   counts: Record<string, number>
 }> {
   const url = `${API_URL}/api/admin/backup/save`
-  const res = await fetch(url, { method: 'POST' })
+  const res = await apiFetch(url, { method: 'POST' })
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`API ${res.status}: ${text || res.statusText}`)
@@ -81,7 +94,7 @@ export async function saveMongoBackupOnServer(): Promise<{
 
 export async function deleteCollection(collectionId: string) {
   const url = `${API_URL}/api/collections/${encodeURIComponent(collectionId)}?confirm=true`
-  const res = await fetch(url, { method: 'DELETE' })
+  const res = await apiFetch(url, { method: 'DELETE' })
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`API ${res.status}: ${text || res.statusText}`)
@@ -91,7 +104,7 @@ export async function deleteCollection(collectionId: string) {
 
 export async function renameCollection(collectionId: string, newCollectionId: string) {
   const url = `${API_URL}/api/collections/${encodeURIComponent(collectionId)}/rename`
-  const res = await fetch(url, {
+  const res = await apiFetch(url, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ new_collection_id: newCollectionId }),
@@ -185,7 +198,7 @@ export async function restoreBlock2RegionVersion(
   version: number
 ) {
   const url = `${API_URL}/api/collections/${collectionId}/cases/${encodeURIComponent(caseId)}/block2region/restore`
-  const res = await fetch(url, {
+  const res = await apiFetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ version }),

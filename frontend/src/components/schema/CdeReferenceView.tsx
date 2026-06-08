@@ -1,5 +1,6 @@
 // @ts-nocheck — Migrated from BDSA-Schema-Wrangler apps/schema-viewer-app
 import React, { useState, useEffect } from 'react';
+import { apiHeaders } from '../../api/client';
 import './CdeReferenceView.css';
 
 const CdeReferenceView = ({ schemaFile, schemaData: schemaDataProp }) => {
@@ -24,7 +25,7 @@ const CdeReferenceView = ({ schemaFile, schemaData: schemaDataProp }) => {
         try {
             setLoading(true);
             setError(null);
-            const response = await fetch(`${schemaFile}?t=${Date.now()}`);
+            const response = await fetch(`${schemaFile}?t=${Date.now()}`, { headers: apiHeaders() });
             if (!response.ok) {
                 throw new Error('Failed to load schema');
             }

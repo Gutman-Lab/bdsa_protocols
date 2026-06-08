@@ -1,16 +1,24 @@
-/** Pitt BDSA split schemas (default for /schema page). */
+/** Pitt BDSA split schemas — loaded from the FastAPI backend. */
+
+import {
+  fetchCombinedSchema,
+  fetchSchema,
+  SCHEMA_API_PATHS,
+  type SchemaId,
+} from '../api/schemas'
+import { apiHeaders } from '../api/client'
 
 export const SCHEMA_PATHS = {
-  clinical: '/schemas/clinical-metadata.json',
-  region: '/schemas/region-metadata.json',
-  stain: '/schemas/stain-metadata.json',
-  slide: '/schemas/slide-level-metadata.json',
+  clinical: SCHEMA_API_PATHS.clinical,
+  region: SCHEMA_API_PATHS.region,
+  stain: SCHEMA_API_PATHS.stain,
+  slide: SCHEMA_API_PATHS.slide,
 } as const
 
 export type SchemaFileKey = keyof typeof SCHEMA_PATHS
 
 export async function fetchSchemaFile(path: string): Promise<Record<string, unknown>> {
-  const response = await fetch(`${path}?t=${Date.now()}`)
+  const response = await fetch(`${path}?t=${Date.now()}`, { headers: apiHeaders() })
   if (!response.ok) {
     throw new Error(`Failed to load schema: ${path}`)
   }
@@ -25,22 +33,17 @@ export async function loadAllSchemas(): Promise<{
   /** Combined object for flattened / CDE views */
   combined: Record<string, unknown>
 }> {
-  const [clinical, region, stain, slide] = await Promise.all([
-    fetchSchemaFile(SCHEMA_PATHS.clinical),
-    fetchSchemaFile(SCHEMA_PATHS.region),
-    fetchSchemaFile(SCHEMA_PATHS.stain),
-    fetchSchemaFile(SCHEMA_PATHS.slide),
-  ])
+  const combined = await fetchCombinedSchema()
   return {
-    clinical,
-    region,
-    stain,
-    slide,
-    combined: {
-      clinicalMetadata: clinical,
-      regionMetadata: region,
-      stainMetadata: stain,
-      slideLevelMetadata: slide,
-    },
+    clinical: combined.clinicalMetadata,
+    region: combined.regionMetadata,
+    stain: combined.stainMetadata,
+    slide: combined.slideLevelMetadata,
+    combined: combined as unknown as Record<string, unknown>,
   }
+}
+
+/** Fetch a single schema by short id. */
+export async function loadSchemaById(id: SchemaFileKey): Promise<Record<string, unknown>> {
+  return fetchSchema(id)
 }

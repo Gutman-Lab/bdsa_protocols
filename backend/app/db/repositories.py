@@ -105,27 +105,594 @@ async def merge_case_id_mappings(
     collection_id: str,
     mappings: list[dict],
     institution_id: str = "001",
+    *,
+    source: str = "BDSA-Schema-Wrangler",
+    version: str = "1.0",
+    skip_validation: bool = False,
 ) -> dict[str, Any]:
     """Merge new mappings with existing (by localCaseId). Returns merged payload."""
+    from app.services.case_id_validation import (
+        build_mapping_indexes,
+        raise_on_conflicts,
+        validate_merge_against_existing,
+        validate_payload_internal,
+    )
+
     existing = await get_case_id_mappings(collection_id)
     existing_list = list(existing.get("mappings", [])) if existing else []
-    by_local: dict[str, str | None] = {
-        m["localCaseId"]: m.get("bdsaCaseId") for m in existing_list
-    }
-    for m in mappings or []:
-        local = m.get("localCaseId")
-        if local is not None:
-            bdsa = m.get("bdsaCaseId")
-            by_local[local] = bdsa if bdsa is not None else by_local.get(local)
-    merged = [{"localCaseId": k, "bdsaCaseId": v} for k, v in by_local.items()]
+    proposed = [m for m in (mappings or []) if m.get("localCaseId")]
+
+    if not skip_validation:
+        conflicts = validate_merge_against_existing(
+            existing_list, proposed, institution_id
+        )
+        raise_on_conflicts(conflicts)
+
+    from app.services.case_id_validation import simulate_case_id_merge
+
+    merged = simulate_case_id_merge(existing_list, proposed)
     payload = {
         "institutionId": institution_id,
         "mappings": merged,
         "totalMappings": len(merged),
-        "source": "BDSA-Schema-Wrangler",
-        "version": "1.0",
+        "source": source,
+        "version": version,
     }
     return await set_case_id_mappings(collection_id, payload)
+
+
+async def replace_case_id_mappings_validated(
+    collection_id: str,
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Replace case ID mappings after validating the full payload."""
+    from app.services.case_id_validation import (
+        raise_on_conflicts,
+        validate_payload_internal,
+    )
+
+    institution_id = payload.get("institutionId", "001")
+    mappings = list(payload.get("mappings", []))
+    conflicts = validate_payload_internal(mappings, institution_id)
+    raise_on_conflicts(conflicts)
+    return await set_case_id_mappings(collection_id, payload)
+
+
+async def validate_case_id_mappings_merge(
+    collection_id: str,
+    mappings: list[dict],
+    institution_id: str = "001",
+) -> list[dict[str, Any]]:
+    """Dry-run merge validation; returns conflict dicts without writing."""
+    from app.services.case_id_validation import validate_merge_against_existing
+
+    existing = await get_case_id_mappings(collection_id)
+    existing_list = list(existing.get("mappings", [])) if existing else []
+    proposed = [m for m in (mappings or []) if m.get("localCaseId")]
+    conflicts = validate_merge_against_existing(
+        existing_list, proposed, institution_id
+    )
+    return [c.to_conflict_dict() for c in conflicts]
+
+
+def _find_case_mapping_row(
+    mappings: list[dict],
+    *,
+    local_case_id: str | None = None,
+    bdsa_case_id: str | None = None,
+) -> dict | None:
+    for row in mappings:
+        if local_case_id is not None and row.get("localCaseId") == local_case_id:
+            return dict(row)
+        if bdsa_case_id is not None and row.get("bdsaCaseId") == bdsa_case_id:
+            return dict(row)
+    return None
+
+
+async def get_case_id_mapping_by_bdsa(
+    collection_id: str,
+    bdsa_case_id: str,
+) -> dict[str, str] | None:
+    """Look up a single mapping by bdsaCaseId."""
+    data = await get_case_id_mappings(collection_id)
+    if not data:
+        return None
+    return _find_case_mapping_row(data.get("mappings", []), bdsa_case_id=bdsa_case_id)
+
+
+async def get_case_id_mapping_by_local(
+    collection_id: str,
+    local_case_id: str,
+) -> dict[str, str] | None:
+    """Look up a single mapping by localCaseId."""
+    data = await get_case_id_mappings(collection_id)
+    if not data:
+        return None
+    return _find_case_mapping_row(data.get("mappings", []), local_case_id=local_case_id)
+
+
+async def get_case_id_mapping_by_alternate(
+    collection_id: str,
+    system: str,
+    value: str,
+) -> dict[str, str] | None:
+    """Look up a single mapping by alternate ID system + value (e.g. nacc)."""
+    from app.services.case_id_validation import (
+        CaseIdMappingValidationError,
+        normalize_alternate_ids,
+    )
+
+    data = await get_case_id_mappings(collection_id)
+    if not data:
+        return None
+    try:
+        target_system, target_value = next(
+            iter(normalize_alternate_ids({system: value}).items())
+        )
+    except (CaseIdMappingValidationError, StopIteration):
+        return None
+    for row in data.get("mappings", []):
+        alternates = normalize_alternate_ids(row.get("alternateIds"))
+        if alternates.get(target_system) == target_value:
+            return dict(row)
+    return None
+
+
+async def allocate_case_id_mapping(
+    collection_id: str,
+    local_case_id: str,
+    institution_id: str = "001",
+    *,
+    source: str = "BDSA-Schema-Wrangler",
+    max_attempts: int = 8,
+) -> tuple[dict[str, str], bool]:
+    """Allocate or return an existing localCaseId -> bdsaCaseId mapping."""
+    from app.services.case_id_validation import (
+        format_bdsa_case_id,
+        lowest_unused_sequence,
+        used_sequences_for_institution,
+        validate_bdsa_case_id_for_institution,
+    )
+
+    for _ in range(max_attempts):
+        existing = await get_case_id_mappings(collection_id)
+        mappings = list(existing.get("mappings", [])) if existing else []
+        for row in mappings:
+            if row.get("localCaseId") == local_case_id:
+                bdsa = row.get("bdsaCaseId")
+                if bdsa:
+                    return dict(row), False
+
+        used = used_sequences_for_institution(mappings, institution_id)
+        seq = lowest_unused_sequence(used)
+        bdsa_case_id = format_bdsa_case_id(institution_id, seq)
+        validate_bdsa_case_id_for_institution(bdsa_case_id, institution_id)
+
+        try:
+            await merge_case_id_mappings(
+                collection_id,
+                [{"localCaseId": local_case_id, "bdsaCaseId": bdsa_case_id}],
+                institution_id,
+                source=source,
+            )
+            created = _find_case_mapping_row(
+                (await get_case_id_mappings(collection_id) or {}).get("mappings", []),
+                local_case_id=local_case_id,
+            )
+            if created:
+                return created, True
+            return {"localCaseId": local_case_id, "bdsaCaseId": bdsa_case_id}, True
+        except Exception:
+            fresh = await get_case_id_mappings(collection_id)
+            fresh_mappings = list(fresh.get("mappings", [])) if fresh else []
+            found = _find_case_mapping_row(fresh_mappings, local_case_id=local_case_id)
+            if found and found.get("bdsaCaseId"):
+                return found, False
+            continue
+
+    raise RuntimeError(
+        f"Failed to allocate bdsaCaseId for {local_case_id} after {max_attempts} attempts"
+    )
+
+
+async def allocate_case_id_mappings_batch(
+    collection_id: str,
+    local_case_ids: list[str],
+    institution_id: str = "001",
+    *,
+    source: str = "BDSA-Schema-Wrangler",
+) -> list[dict[str, Any]]:
+    """Allocate mappings for multiple local case IDs (all-or-nothing)."""
+    from app.services.case_id_validation import (
+        CaseIdMappingConflict,
+        CaseIdMappingConflictError,
+        build_mapping_indexes,
+        format_bdsa_case_id,
+        lowest_unused_sequence,
+        used_sequences_for_institution,
+        validate_bdsa_case_id_for_institution,
+    )
+
+    unique_locals = list(dict.fromkeys(local_case_ids))
+    existing = await get_case_id_mappings(collection_id)
+    mappings = list(existing.get("mappings", [])) if existing else []
+    by_local, by_bdsa = build_mapping_indexes(mappings)
+
+    results: list[dict[str, Any]] = []
+    new_rows: list[dict[str, str]] = []
+    used = used_sequences_for_institution(mappings, institution_id)
+
+    for local in unique_locals:
+        existing_bdsa = by_local.get(local)
+        if existing_bdsa:
+            results.append(
+                {
+                    "localCaseId": local,
+                    "bdsaCaseId": existing_bdsa,
+                    "allocated": False,
+                }
+            )
+            continue
+
+        seq = lowest_unused_sequence(used)
+        used.add(seq)
+        bdsa = format_bdsa_case_id(institution_id, seq)
+        validate_bdsa_case_id_for_institution(bdsa, institution_id)
+
+        if bdsa in by_bdsa and by_bdsa[bdsa] != local:
+            conflict = CaseIdMappingConflict(
+                kind="duplicate_bdsa_case_id",
+                message="bdsaCaseId already assigned",
+                bdsa_case_id=bdsa,
+                existing_local_case_id=by_bdsa[bdsa],
+                requested_local_case_id=local,
+            )
+            raise CaseIdMappingConflictError(conflict.message, conflict)
+
+        new_rows.append({"localCaseId": local, "bdsaCaseId": bdsa})
+        by_local[local] = bdsa
+        by_bdsa[bdsa] = local
+        results.append(
+            {"localCaseId": local, "bdsaCaseId": bdsa, "allocated": True}
+        )
+
+    if new_rows:
+        await merge_case_id_mappings(
+            collection_id,
+            new_rows,
+            institution_id,
+            source=source,
+        )
+
+    return results
+
+
+async def _region_protocol_ids(collection_id: str) -> set[str]:
+    protocols = await get_protocols(collection_id)
+    if not protocols:
+        return set()
+    return {
+        p.get("id")
+        for p in protocols.get("regionProtocols", [])
+        if p.get("id")
+    }
+
+
+async def get_region_label_mappings(collection_id: str) -> dict[str, Any] | None:
+    """Get REGIONO label mappings for a collection."""
+    db = await get_db()
+    doc = await db.region_label_mappings.find_one({"collection_id": collection_id})
+    if doc is None:
+        return None
+    doc.pop("_id", None)
+    doc.pop("collection_id", None)
+    return doc
+
+
+async def set_region_label_mappings(
+    collection_id: str, payload: dict[str, Any]
+) -> dict[str, Any]:
+    """Set (replace) region label mappings for a collection."""
+    db = await get_db()
+    payload["lastUpdated"] = _now_iso()
+    if "mappings" in payload:
+        payload["totalMappings"] = len(payload["mappings"])
+    doc = {"collection_id": collection_id, **payload}
+    await db.region_label_mappings.update_one(
+        {"collection_id": collection_id},
+        {"$set": doc},
+        upsert=True,
+    )
+    return await get_region_label_mappings(collection_id) or doc
+
+
+async def merge_region_label_mappings(
+    collection_id: str,
+    mappings: list[dict],
+    *,
+    source: str = "BDSA-Schema-Wrangler",
+    version: str = "1.0",
+) -> dict[str, Any]:
+    """Merge region label mappings with existing (by normalized)."""
+    from app.services.region_label_validation import (
+        build_mapping_indexes,
+        prepare_mapping_row,
+        raise_on_conflicts,
+        validate_merge_against_existing,
+    )
+
+    valid_ids = await _region_protocol_ids(collection_id)
+    existing = await get_region_label_mappings(collection_id)
+    existing_list = list(existing.get("mappings", [])) if existing else []
+    proposed = [prepare_mapping_row(m) for m in (mappings or []) if m.get("regionLabel") or m.get("normalized")]
+
+    conflicts = validate_merge_against_existing(
+        existing_list, proposed, valid_ids
+    )
+    raise_on_conflicts(conflicts)
+
+    existing_by_norm = build_mapping_indexes(existing_list)
+    merged_by_norm = dict(existing_by_norm)
+    for row in proposed:
+        if not row.get("source"):
+            row["source"] = source
+        merged_by_norm[row["normalized"]] = row
+
+    merged = sorted(
+        merged_by_norm.values(),
+        key=lambda r: r.get("normalized") or "",
+    )
+    payload = {
+        "mappings": merged,
+        "totalMappings": len(merged),
+        "source": source,
+        "version": version,
+    }
+    return await set_region_label_mappings(collection_id, payload)
+
+
+async def replace_region_label_mappings_validated(
+    collection_id: str,
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Replace region label mappings after validating the full payload."""
+    from app.services.region_label_validation import (
+        prepare_mapping_row,
+        raise_on_conflicts,
+        validate_payload_internal,
+    )
+
+    valid_ids = await _region_protocol_ids(collection_id)
+    mappings = [
+        prepare_mapping_row(m)
+        for m in payload.get("mappings", [])
+        if m.get("regionLabel") or m.get("normalized")
+    ]
+    conflicts = validate_payload_internal(mappings, valid_ids)
+    raise_on_conflicts(conflicts)
+    payload = dict(payload)
+    payload["mappings"] = sorted(
+        mappings,
+        key=lambda r: r.get("normalized") or "",
+    )
+    return await set_region_label_mappings(collection_id, payload)
+
+
+async def validate_region_label_mappings_merge(
+    collection_id: str,
+    mappings: list[dict],
+) -> list[dict[str, Any]]:
+    """Dry-run merge validation; returns conflict dicts without writing."""
+    from app.services.region_label_validation import (
+        prepare_mapping_row,
+        validate_merge_against_existing,
+    )
+
+    valid_ids = await _region_protocol_ids(collection_id)
+    existing = await get_region_label_mappings(collection_id)
+    existing_list = list(existing.get("mappings", [])) if existing else []
+    proposed = [
+        prepare_mapping_row(m)
+        for m in (mappings or [])
+        if m.get("regionLabel") or m.get("normalized")
+    ]
+    conflicts = validate_merge_against_existing(
+        existing_list, proposed, valid_ids
+    )
+    return [c.to_conflict_dict() for c in conflicts]
+
+
+async def get_region_label_mapping_by_normalized(
+    collection_id: str,
+    normalized: str,
+    *,
+    validated_only: bool = True,
+) -> dict[str, Any] | None:
+    """Look up a mapping by normalized label (validated rows only by default)."""
+    from app.services.region_label_validation import (
+        build_mapping_indexes,
+        normalize_region_label,
+    )
+
+    key = normalize_region_label(normalized)
+    if not key:
+        return None
+    data = await get_region_label_mappings(collection_id)
+    if not data:
+        return None
+    by_norm = build_mapping_indexes(data.get("mappings", []))
+    row = by_norm.get(key)
+    if row is None:
+        return None
+    if validated_only and not row.get("validated", True):
+        return None
+    return row
+
+
+async def _stain_protocol_ids(collection_id: str) -> set[str]:
+    protocols = await get_protocols(collection_id)
+    if not protocols:
+        return set()
+    return {
+        p.get("id")
+        for p in protocols.get("stainProtocols", [])
+        if p.get("id")
+    }
+
+
+async def get_stain_label_mappings(collection_id: str) -> dict[str, Any] | None:
+    """Get STAINO label mappings for a collection."""
+    db = await get_db()
+    doc = await db.stain_label_mappings.find_one({"collection_id": collection_id})
+    if doc is None:
+        return None
+    doc.pop("_id", None)
+    doc.pop("collection_id", None)
+    return doc
+
+
+async def set_stain_label_mappings(
+    collection_id: str, payload: dict[str, Any]
+) -> dict[str, Any]:
+    """Set (replace) stain label mappings for a collection."""
+    db = await get_db()
+    payload["lastUpdated"] = _now_iso()
+    if "mappings" in payload:
+        payload["totalMappings"] = len(payload["mappings"])
+    doc = {"collection_id": collection_id, **payload}
+    await db.stain_label_mappings.update_one(
+        {"collection_id": collection_id},
+        {"$set": doc},
+        upsert=True,
+    )
+    return await get_stain_label_mappings(collection_id) or doc
+
+
+async def merge_stain_label_mappings(
+    collection_id: str,
+    mappings: list[dict],
+    *,
+    source: str = "BDSA-Schema-Wrangler",
+    version: str = "1.0",
+) -> dict[str, Any]:
+    """Merge stain label mappings with existing (by normalized)."""
+    from app.services.stain_label_validation import (
+        build_mapping_indexes,
+        prepare_mapping_row,
+        raise_on_conflicts,
+        validate_merge_against_existing,
+    )
+
+    valid_ids = await _stain_protocol_ids(collection_id)
+    existing = await get_stain_label_mappings(collection_id)
+    existing_list = list(existing.get("mappings", [])) if existing else []
+    proposed = [
+        prepare_mapping_row(m)
+        for m in (mappings or [])
+        if m.get("stainLabel") or m.get("normalized")
+    ]
+
+    conflicts = validate_merge_against_existing(
+        existing_list, proposed, valid_ids
+    )
+    raise_on_conflicts(conflicts)
+
+    existing_by_norm = build_mapping_indexes(existing_list)
+    merged_by_norm = dict(existing_by_norm)
+    for row in proposed:
+        if not row.get("source"):
+            row["source"] = source
+        merged_by_norm[row["normalized"]] = row
+
+    merged = sorted(
+        merged_by_norm.values(),
+        key=lambda r: r.get("normalized") or "",
+    )
+    payload = {
+        "mappings": merged,
+        "totalMappings": len(merged),
+        "source": source,
+        "version": version,
+    }
+    return await set_stain_label_mappings(collection_id, payload)
+
+
+async def replace_stain_label_mappings_validated(
+    collection_id: str,
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Replace stain label mappings after validating the full payload."""
+    from app.services.stain_label_validation import (
+        prepare_mapping_row,
+        raise_on_conflicts,
+        validate_payload_internal,
+    )
+
+    valid_ids = await _stain_protocol_ids(collection_id)
+    mappings = [
+        prepare_mapping_row(m)
+        for m in payload.get("mappings", [])
+        if m.get("stainLabel") or m.get("normalized")
+    ]
+    conflicts = validate_payload_internal(mappings, valid_ids)
+    raise_on_conflicts(conflicts)
+    payload = dict(payload)
+    payload["mappings"] = sorted(
+        mappings,
+        key=lambda r: r.get("normalized") or "",
+    )
+    return await set_stain_label_mappings(collection_id, payload)
+
+
+async def validate_stain_label_mappings_merge(
+    collection_id: str,
+    mappings: list[dict],
+) -> list[dict[str, Any]]:
+    """Dry-run merge validation; returns conflict dicts without writing."""
+    from app.services.stain_label_validation import (
+        prepare_mapping_row,
+        validate_merge_against_existing,
+    )
+
+    valid_ids = await _stain_protocol_ids(collection_id)
+    existing = await get_stain_label_mappings(collection_id)
+    existing_list = list(existing.get("mappings", [])) if existing else []
+    proposed = [
+        prepare_mapping_row(m)
+        for m in (mappings or [])
+        if m.get("stainLabel") or m.get("normalized")
+    ]
+    conflicts = validate_merge_against_existing(
+        existing_list, proposed, valid_ids
+    )
+    return [c.to_conflict_dict() for c in conflicts]
+
+
+async def get_stain_label_mapping_by_normalized(
+    collection_id: str,
+    normalized: str,
+    *,
+    validated_only: bool = True,
+) -> dict[str, Any] | None:
+    """Look up a mapping by normalized label (validated rows only by default)."""
+    from app.services.stain_label_validation import (
+        build_mapping_indexes,
+        normalize_stain_label,
+    )
+
+    key = normalize_stain_label(normalized)
+    if not key:
+        return None
+    data = await get_stain_label_mappings(collection_id)
+    if not data:
+        return None
+    by_norm = build_mapping_indexes(data.get("mappings", []))
+    row = by_norm.get(key)
+    if row is None:
+        return None
+    if validated_only and not row.get("validated", True):
+        return None
+    return row
 
 
 async def get_slides(collection_id: str) -> dict[str, Any] | None:
@@ -243,8 +810,8 @@ async def ensure_case_in_mappings(
     current = by_local.get(local_case_id)
     if local_case_id not in by_local:
         by_local[local_case_id] = bdsa_case_id
-    elif bdsa_case_id is not None:
-        by_local[local_case_id] = bdsa_case_id
+    elif bdsa_case_id is not None and current != bdsa_case_id:
+        pass
     else:
         by_local[local_case_id] = current
     merged = [{"localCaseId": k, "bdsaCaseId": v} for k, v in by_local.items()]
@@ -526,6 +1093,8 @@ async def get_dsa_items_count_for_case(
 COLLECTION_SCOPED_COLLECTIONS = (
     "protocols",
     "case_id_mappings",
+    "region_label_mappings",
+    "stain_label_mappings",
     "slides",
     "patient_id_mappings",
     "block2region",

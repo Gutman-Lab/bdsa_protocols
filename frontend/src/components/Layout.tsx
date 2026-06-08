@@ -33,6 +33,12 @@ export default function Layout({ children }: LayoutProps) {
             >
               Schema
             </Link>
+            <Link
+              to="/slide-mappings"
+              className={`nav-link ${location.pathname === '/slide-mappings' ? 'active' : ''}`}
+            >
+              Slide mappings
+            </Link>
           </nav>
         </div>
       </header>
