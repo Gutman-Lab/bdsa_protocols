@@ -38,7 +38,11 @@ export class ApiProtocolStorage implements ProtocolStorage {
     }
     const stainProtocols = protocols.filter((p) => p.type === 'stain')
     const regionProtocols = protocols.filter((p) => p.type === 'region')
-    const blockProtocols = protocols.filter((p) => p.type === 'block')
+    let blockProtocols = protocols.filter((p) => p.type === 'block') as Record<string, unknown>[]
+    if (blockProtocols.length === 0) {
+      const existing = await fetchCollectionProtocols(this.collectionId)
+      blockProtocols = existing.protocols.blockProtocols ?? []
+    }
     await putCollectionProtocols(this.collectionId, {
       stainProtocols,
       regionProtocols,

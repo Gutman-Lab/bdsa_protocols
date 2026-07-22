@@ -16,10 +16,18 @@ import {
   suggestNewCollectionId,
   type CollectionSummary,
 } from '../utils/collectionLabels'
+import { fetchCombinedSchema } from '../api/schemas'
+import { BlockProtocolsPanel } from '../components/protocols/BlockProtocolsPanel'
+import { FlatProtocolsView } from '../components/protocols/FlatProtocolsView'
+import { AbbreviationCollisionBanner } from '../components/protocols/AbbreviationCollisionBanner'
 import './ProtocolsPage.css'
+
+type ProtocolsViewMode = 'edit' | 'block' | 'flat'
 
 export default function ProtocolsPage() {
   const schemaValidator = useMemo(() => createSchemaValidator(), [])
+  const [schemaReady, setSchemaReady] = useState(false)
+  const [schemaError, setSchemaError] = useState<string | null>(null)
   const [collections, setCollections] = useState<CollectionSummary[]>([])
   const [collectionsLoading, setCollectionsLoading] = useState(true)
   const [collectionsError, setCollectionsError] = useState<string | null>(null)
@@ -28,6 +36,8 @@ export default function ProtocolsPage() {
   )
   const [newCollectionName, setNewCollectionName] = useState('')
   const [advancedId, setAdvancedId] = useState('')
+  const [showAdvancedId, setShowAdvancedId] = useState(false)
+  const [viewMode, setViewMode] = useState<ProtocolsViewMode>('edit')
 
   const loadCollections = useCallback(() => {
     setCollectionsLoading(true)
@@ -65,6 +75,26 @@ export default function ProtocolsPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- seed default once
   }, [loadCollections])
+
+  useEffect(() => {
+    let cancelled = false
+    setSchemaReady(false)
+    setSchemaError(null)
+    fetchCombinedSchema()
+      .then((combined) => schemaValidator.loadSchemas(undefined, combined))
+      .then(() => {
+        if (!cancelled) setSchemaReady(true)
+      })
+      .catch((e) => {
+        if (!cancelled) {
+          setSchemaError(e instanceof Error ? e.message : String(e))
+          setSchemaReady(true)
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [schemaValidator])
 
   const storage = useMemo(
     () => new ApiProtocolStorage(collectionId),
@@ -175,40 +205,50 @@ export default function ProtocolsPage() {
             </button>
           </div>
         </div>
-        {selected && (
-          <p className="protocols-collection-id-hint">
-            ID <code>{selected.collection_id}</code> (used by the API; #{selected.number} assigned
-            automatically)
-          </p>
-        )}
-        <details className="protocols-advanced-id">
-          <summary>Use an existing collection ID</summary>
-          <div className="protocols-advanced-id-row">
-            <input
-              type="text"
-              placeholder="Collection ID (e.g. Girder folder id)"
-              value={advancedId}
-              onChange={(e) => setAdvancedId(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') void handleUseAdvancedId()
-              }}
-            />
+        <div className="protocols-toolbar-meta">
+          <div className="protocols-toolbar-meta-line">
+            {selected && (
+              <span className="protocols-meta-item protocols-collection-id-hint">
+                ID <code>{selected.collection_id}</code> (API; #{selected.number} auto)
+              </span>
+            )}
             <button
               type="button"
-              className="protocols-use-id-btn"
-              disabled={!advancedId.trim()}
-              onClick={() => void handleUseAdvancedId()}
+              className="protocols-meta-item protocols-meta-link"
+              onClick={() => setShowAdvancedId((open) => !open)}
+              aria-expanded={showAdvancedId}
             >
-              Use ID
+              {showAdvancedId ? '▾' : '▸'} Use an existing collection ID
             </button>
+            <span className="protocols-meta-item protocols-api-hint">
+              API: {getApiUrl() || '(same origin /api proxy)'}
+              {collectionsError && (
+                <span className="protocols-collections-error"> — {collectionsError}</span>
+              )}
+            </span>
           </div>
-        </details>
-        <p className="protocols-api-hint">
-          API: {getApiUrl() || '(same origin /api proxy)'}
-          {collectionsError && (
-            <span className="protocols-collections-error"> — {collectionsError}</span>
+          {showAdvancedId && (
+            <div className="protocols-advanced-id-row">
+              <input
+                type="text"
+                placeholder="Collection ID (e.g. Girder folder id)"
+                value={advancedId}
+                onChange={(e) => setAdvancedId(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') void handleUseAdvancedId()
+                }}
+              />
+              <button
+                type="button"
+                className="protocols-use-id-btn"
+                disabled={!advancedId.trim()}
+                onClick={() => void handleUseAdvancedId()}
+              >
+                Use ID
+              </button>
+            </div>
           )}
-        </p>
+        </div>
       </div>
 
       {!activeId ? (
@@ -218,16 +258,67 @@ export default function ProtocolsPage() {
         </p>
       ) : (
         <ProtocolProvider key={activeId} storage={storage}>
-          <ProtocolsTab
-            schemaValidator={schemaValidator}
-            useBundledBdsaSchema
-            title="Stain and region protocols"
-            description={
-              selected
-                ? `${formatCollectionLabel(selected)} — stain and region protocols (saved to the API).`
-                : `Protocols for collection ${activeId}.`
-            }
-          />
+          <AbbreviationCollisionBanner />
+          <div className="protocols-view-tabs" role="tablist" aria-label="Protocol views">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === 'edit'}
+              className={`protocols-view-tab${viewMode === 'edit' ? ' active' : ''}`}
+              onClick={() => setViewMode('edit')}
+            >
+              Edit protocols
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === 'block'}
+              className={`protocols-view-tab${viewMode === 'block' ? ' active' : ''}`}
+              onClick={() => setViewMode('block')}
+            >
+              Block protocols
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === 'flat'}
+              className={`protocols-view-tab${viewMode === 'flat' ? ' active' : ''}`}
+              onClick={() => setViewMode('flat')}
+            >
+              Flat QC export
+            </button>
+          </div>
+          {viewMode === 'flat' ? (
+            <FlatProtocolsView
+              collectionLabel={
+                selected ? formatCollectionLabel(selected) : activeId
+              }
+            />
+          ) : viewMode === 'block' ? (
+            <BlockProtocolsPanel
+              collectionId={activeId}
+              collectionLabel={selected ? formatCollectionLabel(selected) : activeId}
+            />
+          ) : !schemaReady ? (
+            <p className="protocols-pick-collection">Loading BDSA schema for form options…</p>
+          ) : (
+            <>
+              {schemaError && (
+                <p className="protocols-collections-error">
+                  Schema load failed ({schemaError}) — using fallback dropdown options.
+                </p>
+              )}
+              <ProtocolsTab
+                schemaValidator={schemaValidator}
+                title="Stain and region protocols"
+                description={
+                  selected
+                    ? `${formatCollectionLabel(selected)} — stain and region protocols (saved to the API).`
+                    : `Protocols for collection ${activeId}.`
+                }
+              />
+            </>
+          )}
         </ProtocolProvider>
       )}
     </div>

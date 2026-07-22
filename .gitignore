@@ -40,3 +40,6 @@ htmlcov
 # Local Mongo JSON exports (admin backup)
 backups/*.json
 !backups/.gitkeep
+
+# Large NACC investigator dump (import locally; do not commit)
+docs/investigator_nacc74.csv

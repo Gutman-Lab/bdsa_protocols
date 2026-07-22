@@ -1,12 +1,24 @@
 """API routes for stain and region protocols (wrangler-compatible)."""
 from typing import Any
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from app.db.repositories import get_protocols, set_protocols, merge_protocols
 from app.schemas.protocols import ProtocolsPayload, ProtocolsResponse
+from app.services.block_protocol_validation import validate_block_protocols
 
 router = APIRouter(prefix="/collections/{collection_id}/protocols", tags=["protocols"])
+
+
+def _validate_block_protocol_refs(payload: ProtocolsPayload) -> None:
+    region_ids = {
+        str(p.get("id"))
+        for p in payload.regionProtocols
+        if isinstance(p, dict) and p.get("id")
+    }
+    errors = validate_block_protocols(payload.blockProtocols, region_ids)
+    if errors:
+        raise HTTPException(status_code=422, detail={"errors": errors})
 
 
 @router.get("", response_model=ProtocolsResponse)
@@ -40,6 +52,7 @@ async def put_collection_protocols(
     """Replace protocols for a collection (full replace).
     Compatible with BDSA-Schema-Wrangler push.
     """
+    _validate_block_protocol_refs(body)
     payload: dict[str, Any] = {
         "stainProtocols": body.stainProtocols,
         "regionProtocols": body.regionProtocols,
@@ -66,6 +79,7 @@ async def merge_collection_protocols(
     collection_id: str, body: ProtocolsPayload
 ) -> ProtocolsResponse:
     """Merge protocols with existing (by id). New protocols are added; existing ids are kept."""
+    _validate_block_protocol_refs(body)
     stored = await merge_protocols(
         collection_id,
         body.stainProtocols,

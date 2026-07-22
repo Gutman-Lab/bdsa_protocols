@@ -42,7 +42,13 @@ export default function Layout({ children }: LayoutProps) {
           </nav>
         </div>
       </header>
-      <main className="layout-main">
+      <main
+        className={`layout-main${
+          ['/protocols', '/documentation', '/schema'].includes(location.pathname)
+            ? ' layout-main--compact'
+            : ''
+        }`}
+      >
         {children}
       </main>
     </div>

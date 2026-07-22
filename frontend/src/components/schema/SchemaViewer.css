@@ -6,25 +6,24 @@
 }
 
 .schema-overview {
-    background: white;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 0.55rem 0.7rem;
+    margin-bottom: 0.65rem;
+    border: 1px solid #e8e8e8;
 }
 
 .schema-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 0.35rem;
 }
 
 .schema-header-row h3 {
     margin: 0;
     color: #1976d2;
-    font-size: 1.4rem;
+    font-size: 1.05rem;
     font-weight: 600;
 }
 
@@ -32,9 +31,9 @@
     background: #1976d2;
     color: white;
     border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    border-radius: 4px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -50,29 +49,28 @@
 
 .schema-info {
     color: #333;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 .schema-info p {
-    margin: 8px 0;
+    margin: 0.15rem 0;
 }
 
 .schema-properties-section {
-    background: white;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #e8e8e8;
 }
 
 .schema-properties-section h3 {
-    margin: 0 0 20px 0;
+    margin: 0 0 0.45rem;
     color: #1976d2;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
-    border-bottom: 2px solid #e3f2fd;
-    padding-bottom: 8px;
+    border-bottom: 1px solid #e8f0f8;
+    padding-bottom: 0.25rem;
 }
 
 .schema-properties {
@@ -81,15 +79,15 @@
 }
 
 .schema-property {
-    margin: 16px 0;
-    padding: 16px;
+    margin: 0.4rem 0;
+    padding: 0.45rem 0.55rem;
     background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #1976d2;
+    border-radius: 4px;
+    border-left: 3px solid #1976d2;
 }
 
 .property-header {
-    margin-bottom: 8px;
+    margin-bottom: 0.2rem;
 }
 
 .property-name {
@@ -111,11 +109,11 @@
 }
 
 .property-description {
-    margin: 8px 0;
+    margin: 0.2rem 0;
     color: #555;
     font-style: italic;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    font-size: 0.82rem;
+    line-height: 1.35;
     white-space: pre-line;
 }
 
@@ -123,8 +121,8 @@
 .property-pattern,
 .property-cde,
 .property-abbreviation {
-    margin: 6px 0;
-    font-size: 0.85rem;
+    margin: 0.15rem 0;
+    font-size: 0.8rem;
     color: #666;
 }
 
@@ -144,9 +142,9 @@
 }
 
 .property-children {
-    margin-top: 12px;
-    padding-left: 20px;
-    border-left: 2px solid #e0e0e0;
+    margin-top: 0.35rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid #e0e0e0;
 }
 
 .array-items-label {

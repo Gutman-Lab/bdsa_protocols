@@ -1,5 +1,12 @@
 import { useMemo, useState } from 'react'
-import type { CaseIdMappingItem, PatientIdMappingItem } from '../../api/idMappings'
+import { hasApiKey } from '../../api/client'
+import {
+  mergeCaseIdMappings,
+  type CaseIdMappingItem,
+  type PatientIdMappingItem,
+} from '../../api/idMappings'
+import { allAliasSystems } from '../../utils/caseIdAliases'
+import { CaseIdAliasCell } from './CaseIdAliasCell'
 
 function matchesQuery(query: string, ...values: (string | null | undefined)[]): boolean {
   if (!query) return true
@@ -13,11 +20,13 @@ function RegistryMeta({
   lastUpdated,
   source,
   count,
+  aliasStats,
 }: {
   institutionId?: string
   lastUpdated?: string | null
   source?: string
   count: number
+  aliasStats: { system: string; label: string; filled: number }[]
 }) {
   return (
     <p className="slide-mappings-section-desc">
@@ -28,6 +37,14 @@ function RegistryMeta({
           · institution <code>{institutionId}</code>
         </>
       ) : null}
+      {aliasStats.map(({ system, label, filled }) =>
+        filled > 0 ? (
+          <span key={system}>
+            {' '}
+            · {filled} with {label}
+          </span>
+        ) : null,
+      )}
       {lastUpdated ? (
         <>
           {' '}
@@ -45,6 +62,7 @@ function RegistryMeta({
 }
 
 export function CaseIdMappingsTab({
+  collectionId,
   caseMappings,
   caseInstitutionId,
   caseLastUpdated,
@@ -53,7 +71,9 @@ export function CaseIdMappingsTab({
   patientInstitutionId,
   patientLastUpdated,
   patientSource,
+  onMappingsUpdated,
 }: {
+  collectionId: string
   caseMappings: CaseIdMappingItem[]
   caseInstitutionId?: string
   caseLastUpdated?: string | null
@@ -62,18 +82,23 @@ export function CaseIdMappingsTab({
   patientInstitutionId?: string
   patientLastUpdated?: string | null
   patientSource?: string
+  onMappingsUpdated?: () => void
 }) {
   const [search, setSearch] = useState('')
+  const [savingKey, setSavingKey] = useState<string | null>(null)
+  const canEdit = hasApiKey()
 
-  const alternateSystems = useMemo(() => {
-    const systems = new Set<string>()
-    for (const row of caseMappings) {
-      for (const key of Object.keys(row.alternateIds ?? {})) {
-        systems.add(key)
-      }
-    }
-    return [...systems].sort()
-  }, [caseMappings])
+  const aliasSystems = useMemo(() => allAliasSystems(caseMappings), [caseMappings])
+
+  const aliasStats = useMemo(
+    () =>
+      aliasSystems.map((system) => ({
+        system: system.key,
+        label: system.label,
+        filled: caseMappings.filter((row) => row.alternateIds?.[system.key]).length,
+      })),
+    [aliasSystems, caseMappings],
+  )
 
   const filteredCaseMappings = useMemo(() => {
     const rows = caseMappings.filter((row) => {
@@ -91,6 +116,31 @@ export function CaseIdMappingsTab({
   }, [patientMappings, search])
 
   const showPatientSection = patientMappings.length > 0
+
+  const saveAlias = async (
+    row: CaseIdMappingItem,
+    systemKey: string,
+    nextValue: string | null,
+  ) => {
+    const cellKey = `${row.localCaseId}:${systemKey}`
+    setSavingKey(cellKey)
+    try {
+      await mergeCaseIdMappings(collectionId, {
+        institutionId: caseInstitutionId ?? '001',
+        mappings: [
+          {
+            localCaseId: row.localCaseId,
+            bdsaCaseId: row.bdsaCaseId,
+            alternateIds: { [systemKey]: nextValue ?? '' },
+          },
+        ],
+        source: 'bdsa-protocols-ui',
+      })
+      onMappingsUpdated?.()
+    } finally {
+      setSavingKey(null)
+    }
+  }
 
   return (
     <div>
@@ -119,15 +169,22 @@ export function CaseIdMappingsTab({
         <h3>Case ID registry (localCaseId → bdsaCaseId)</h3>
         <p className="slide-mappings-section-desc">
           Canonical BDSA case IDs use format <code>BDSA-{'{institution}'}-{'{sequence}'}</code>{' '}
-          (e.g. <code>BDSA-002-00001</code> for U. Kentucky). Optional{' '}
-          <code>alternateIds</code> crosswalk external systems (e.g. <code>nacc</code> for NACC
-          case IDs linked to clinical-metadata <code>NACCID</code>).
+          (e.g. <code>BDSA-002-00001</code> for U. Kentucky). Use the alias columns to attach
+          external IDs such as <strong>NACC ID</strong> (<code>alternateIds.nacc</code>, linked to
+          clinical-metadata <code>NACCID</code>).
         </p>
+        {!canEdit && (
+          <p className="slide-mappings-section-desc case-id-readonly-hint">
+            Alias editing requires <code>VITE_BDSA_API_KEY</code> in the frontend environment.
+            View and filter still work without it.
+          </p>
+        )}
         <RegistryMeta
           institutionId={caseInstitutionId}
           lastUpdated={caseLastUpdated}
           source={caseSource}
           count={filteredCaseMappings.length}
+          aliasStats={aliasStats}
         />
         {caseMappings.length === 0 ? (
           <p className="slide-mappings-empty">No case ID mappings stored for this center yet.</p>
@@ -135,34 +192,42 @@ export function CaseIdMappingsTab({
           <p className="slide-mappings-empty">No rows match your filter.</p>
         ) : (
           <div className="slide-mappings-table-wrap">
-            <table className="slide-mappings-table">
+            <table className="slide-mappings-table case-id-mappings-table">
               <thead>
                 <tr>
                   <th>Local case ID</th>
                   <th>BDSA case ID</th>
-                  {alternateSystems.map((system) => (
-                    <th key={system}>{system}</th>
+                  {aliasSystems.map((system) => (
+                    <th key={system.key} title={system.hint}>
+                      {system.label}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {filteredCaseMappings.map((row) => (
-                  <tr key={`${row.localCaseId}:${row.bdsaCaseId}`}>
+                  <tr key={row.localCaseId}>
                     <td>
                       <code>{row.localCaseId}</code>
                     </td>
                     <td>
                       <code>{row.bdsaCaseId}</code>
                     </td>
-                    {alternateSystems.map((system) => (
-                      <td key={system}>
-                        {row.alternateIds?.[system] ? (
-                          <code>{row.alternateIds[system]}</code>
-                        ) : (
-                          <span className="slide-mappings-muted">—</span>
-                        )}
-                      </td>
-                    ))}
+                    {aliasSystems.map((system) => {
+                      const cellKey = `${row.localCaseId}:${system.key}`
+                      return (
+                        <td key={system.key} className="case-alias-td">
+                          <CaseIdAliasCell
+                            value={row.alternateIds?.[system.key]}
+                            label={system.label}
+                            hint={system.hint}
+                            disabled={!canEdit}
+                            saving={savingKey === cellKey}
+                            onSave={(next) => saveAlias(row, system.key, next)}
+                          />
+                        </td>
+                      )
+                    })}
                   </tr>
                 ))}
               </tbody>
@@ -183,6 +248,7 @@ export function CaseIdMappingsTab({
             lastUpdated={patientLastUpdated}
             source={patientSource}
             count={filteredPatientMappings.length}
+            aliasStats={[]}
           />
           {filteredPatientMappings.length === 0 ? (
             <p className="slide-mappings-empty">No patient rows match your filter.</p>

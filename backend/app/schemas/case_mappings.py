@@ -7,11 +7,11 @@ class CaseIdMappingItem(BaseModel):
 
     localCaseId: str
     bdsaCaseId: str
-    alternateIds: dict[str, str] = Field(
+    alternateIds: dict[str, str | None] = Field(
         default_factory=dict,
         description=(
             "External identifier crosswalk keyed by system name (e.g. nacc, ndd). "
-            "Keys are normalized to lowercase on write."
+            "Keys are normalized to lowercase on write. Null or blank values remove a key on merge."
         ),
     )
 

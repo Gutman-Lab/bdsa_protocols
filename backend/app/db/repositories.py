@@ -1107,6 +1107,7 @@ COLLECTION_SCOPED_COLLECTIONS = (
 BACKUP_COLLECTION_NAMES = (
     "collection_metadata",
     *COLLECTION_SCOPED_COLLECTIONS,
+    "clinical_by_nacc",
 )
 
 

@@ -18,13 +18,13 @@ docker compose up -d
 
 ### API key (recommended for public hosts)
 
-Set `BDSA_API_KEY` in `.env`. All `/api/*` routes then require header:
+Set `BDSA_API_KEY` in `.env`. Most `/api/*` routes then require header:
 
 ```http
 X-API-Key: your-secret-here
 ```
 
-`/`, `/health`, and `/docs` stay open (use **Authorize** in Swagger with the same key to try endpoints). If `BDSA_API_KEY` is unset, `/api` accepts unauthenticated requests (local dev only).
+`/api/schemas` (list + GET) stays public. `/`, `/health`, and `/docs` stay open (use **Authorize** in Swagger with the same key to try endpoints). If `BDSA_API_KEY` is unset, `/api` accepts unauthenticated requests (local dev only).
 
 Frontends send the key via `VITE_BDSA_API_KEY` (same value as `BDSA_API_KEY`).
 
@@ -33,6 +33,19 @@ curl -H "X-API-Key: $BDSA_API_KEY" http://localhost:8000/api/schemas
 ```
 
 Full details (external servers, Python examples, env vars): **`docs/API.md`**.
+
+### NACC clinical data
+
+`GET /api/clinical/by-nacc/{naccid}` serves clinical-schema fields loaded from the investigator NACC dump. Import (gitignored CSV):
+
+```bash
+docker compose run --rm \
+  -v "$(pwd)/docs:/data:ro" -v "$(pwd)/scripts:/scripts:ro" \
+  backend python /scripts/import_nacc_clinical.py \
+  --csv /data/investigator_nacc74.csv \
+  --mongodb-url mongodb://mongodb:27017 \
+  --mongodb-db bdsa_protocols
+```
 
 Rebuild after code changes:
 

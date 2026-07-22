@@ -1,27 +1,26 @@
 .cde-reference-view {
     width: 100%;
     max-width: 100%;
-    padding: 20px;
+    padding: 0;
     background: #ffffff;
-    max-height: calc(100vh - 200px);
     overflow-y: auto;
     overflow-x: hidden;
 }
 
 .cde-header {
-    margin-bottom: 24px;
+    margin-bottom: 0.5rem;
 }
 
 .cde-header h2 {
-    margin: 0 0 8px 0;
-    font-size: 24px;
+    margin: 0 0 0.15rem;
+    font-size: 1rem;
     color: #2c3e50;
 }
 
 .cde-header p {
-    margin: 0 0 16px 0;
+    margin: 0 0 0.35rem;
     color: #7f8c8d;
-    font-size: 14px;
+    font-size: 0.82rem;
 }
 
 .header-actions {
@@ -39,10 +38,10 @@
 
 .search-input {
     width: 100%;
-    padding: 10px 36px 10px 12px;
+    padding: 0.35rem 2rem 0.35rem 0.55rem;
     border: 1px solid #dfe6e9;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 0.85rem;
     transition: border-color 0.2s;
 }
 
@@ -108,7 +107,7 @@
 .cde-content {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 0.65rem;
 }
 
 .cde-collection {
@@ -120,14 +119,14 @@
 
 .collection-header {
     margin: 0;
-    padding: 16px 20px;
+    padding: 0.4rem 0.65rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    font-size: 18px;
+    font-size: 0.9rem;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.5rem;
 }
 
 .collection-count {
@@ -144,8 +143,8 @@
 .table-header {
     display: grid;
     grid-template-columns: 120px 180px 90px 90px 180px 1fr 110px;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 8px;
+    padding: 0.4rem 0.55rem;
     background: #f8f9fa;
     border-bottom: 2px solid #dfe6e9;
     font-weight: 600;
@@ -159,8 +158,8 @@
 .table-row {
     display: grid;
     grid-template-columns: 120px 180px 90px 90px 180px 1fr 110px;
-    gap: 12px;
-    padding: 16px;
+    gap: 8px;
+    padding: 0.45rem 0.55rem;
     border-bottom: 1px solid #ecf0f1;
     transition: background 0.2s;
 }

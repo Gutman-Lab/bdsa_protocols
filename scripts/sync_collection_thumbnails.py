@@ -26,6 +26,7 @@ import argparse
 import os
 import re
 import sys
+import time
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -119,6 +120,7 @@ def sync_collection_thumbnails(
     dry_run: bool = False,
     force: bool = False,
     verbose: bool = False,
+    delay: float = 0,
 ) -> dict[str, int]:
     """Walk collection folders and download missing thumbnails."""
     collection = gc.getCollection(collection_id)
@@ -157,6 +159,8 @@ def sync_collection_thumbnails(
                 dest_path = _download_thumbnail(gc, item["_id"], dest_base, width)
                 stats["downloaded"] += 1
                 print(f"  saved {item.get('name')} -> {dest_path}")
+                if delay > 0:
+                    time.sleep(delay)
             except Exception as exc:
                 stats["failed"] += 1
                 print(f"  failed {item.get('name')} ({item['_id']}): {exc}", file=sys.stderr)
@@ -211,6 +215,13 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Print every folder and skipped item",
     )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=0,
+        metavar="SECONDS",
+        help="Pause between thumbnail downloads (rate limiting)",
+    )
     return parser.parse_args(argv)
 
 
@@ -235,6 +246,7 @@ def main(argv: list[str] | None = None) -> int:
         dry_run=args.dry_run,
         force=args.force,
         verbose=args.verbose,
+        delay=max(0, args.delay),
     )
 
     print(

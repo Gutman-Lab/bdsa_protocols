@@ -128,6 +128,33 @@ def normalize_alternate_ids(raw: dict[str, Any] | None) -> dict[str, str]:
     return out
 
 
+def merge_alternate_id_dicts(
+    existing: dict[str, str],
+    proposed_raw: dict[str, Any] | None,
+) -> dict[str, str]:
+    """Merge proposed alternateIds onto existing; null/blank values remove a system key."""
+    if proposed_raw is None:
+        return existing
+    merged = dict(existing)
+    for system, value in proposed_raw.items():
+        key = str(system).strip().lower()
+        if not key:
+            continue
+        if not ALTERNATE_ID_SYSTEM_RE.match(key):
+            raise CaseIdMappingValidationError(
+                f"Invalid alternate ID system name: {system!r}",
+                CaseIdMappingConflict(
+                    kind="invalid_alternate_id_system",
+                    alternate_id_system=key,
+                ),
+            )
+        if value is None or (isinstance(value, str) and not value.strip()):
+            merged.pop(key, None)
+            continue
+        merged[key] = str(value).strip()
+    return merged
+
+
 def build_alternate_id_index(
     mappings: list[dict[str, Any]],
 ) -> dict[tuple[str, str], str]:
@@ -159,9 +186,8 @@ def merge_mapping_rows(
     existing_alt = normalize_alternate_ids(
         existing.get("alternateIds") if existing else None
     )
-    proposed_alt = normalize_alternate_ids(proposed.get("alternateIds"))
-    if proposed_alt:
-        existing_alt.update(proposed_alt)
+    if "alternateIds" in proposed:
+        existing_alt = merge_alternate_id_dicts(existing_alt, proposed.get("alternateIds"))
     if existing_alt:
         row["alternateIds"] = existing_alt
     elif "alternateIds" in row:
@@ -342,7 +368,7 @@ def validate_merge_proposals(
             )
             continue
         has_bdsa = bool(row.get("bdsaCaseId"))
-        has_alternates = bool(row.get("alternateIds"))
+        has_alternates = row.get("alternateIds") is not None
         if not has_bdsa and not has_alternates:
             conflicts.append(
                 CaseIdMappingConflict(

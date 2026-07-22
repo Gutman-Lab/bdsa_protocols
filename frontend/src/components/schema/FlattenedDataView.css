@@ -1,34 +1,36 @@
 .flattened-data-view {
-    padding: 12px;
+    padding: 0;
     max-width: 100%;
-    height: calc(100vh - 160px);
     display: flex;
     flex-direction: column;
 }
 
 .flattened-header {
-    margin-bottom: 8px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 8px;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 0.35rem;
     flex-shrink: 0;
 }
 
 .flattened-header h2 {
     color: #333;
-    margin: 0 0 4px 0;
-    font-size: 20px;
+    margin: 0 0 0.15rem;
+    font-size: 1rem;
 }
 
 .flattened-header p {
     color: #666;
-    margin: 0 0 8px 0;
+    margin: 0 0 0.35rem;
+    font-size: 0.82rem;
 }
 
 .header-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 0.25rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .stats {
@@ -76,11 +78,11 @@
 
 .stat {
     background: #f0f0f0;
-    padding: 6px 10px;
+    padding: 0.2rem 0.45rem;
     border-radius: 4px;
     font-weight: 500;
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.78rem;
 }
 
 .flattened-content {
@@ -96,8 +98,8 @@
 .table-header {
     display: grid;
     grid-template-columns: 1.5fr 0.7fr 1.2fr 1fr 1.8fr 2fr;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 0.4rem 0.55rem;
     background: #f8f9fa;
     border-bottom: 2px solid #e0e0e0;
     font-weight: 600;
@@ -112,8 +114,8 @@
 .table-row {
     display: grid;
     grid-template-columns: 1.5fr 0.7fr 1.2fr 1fr 1.8fr 2fr;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 0.4rem 0.55rem;
     border-bottom: 1px solid #f0f0f0;
     align-items: start;
     transition: background-color 0.2s;

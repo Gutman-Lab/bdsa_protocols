@@ -9,6 +9,7 @@ from .block2region import router as block2region_router
 from .dsa_sync import router as dsa_sync_router
 from .admin import router as admin_router
 from .schemas import router as schemas_router
+from .clinical import router as clinical_router
 
 __all__ = [
     "protocols_router",
@@ -22,4 +23,5 @@ __all__ = [
     "dsa_sync_router",
     "admin_router",
     "schemas_router",
+    "clinical_router",
 ]

@@ -17,7 +17,7 @@ Full endpoint reference: Swagger at `/docs`, or see `backend/README.md`.
 
 ## API key (required for `/api/*` when enabled)
 
-When `BDSA_API_KEY` is set in `.env`, every route under `/api/` requires a shared secret in the request header:
+When `BDSA_API_KEY` is set in `.env`, most routes under `/api/` require a shared secret in the request header:
 
 ```http
 X-API-Key: <your-secret>
@@ -27,7 +27,8 @@ X-API-Key: <your-secret>
 
 | Path | Key required? |
 |------|----------------|
-| `/api/**` | **Yes** (when `BDSA_API_KEY` is set) |
+| `/api/schemas`, `/api/schemas/*` | **No** (list + fetch schema JSON is public) |
+| `/api/**` (everything else) | **Yes** (when `BDSA_API_KEY` is set) |
 | `/health` | No |
 | `/` | No |
 | `/docs`, `/redoc` | No (use **Authorize** in Swagger to try `/api` calls) |
@@ -58,17 +59,16 @@ docker compose up -d
 
 ### External server / script examples
 
-**curl — list schemas**
+**curl — list schemas** (no API key)
 
 ```bash
-export BDSA_API_KEY='your-secret'
-curl -s -H "X-API-Key: $BDSA_API_KEY" \
-  https://api.bdsa.io/api/schemas
+curl -s https://api.bdsa.io/api/schemas
 ```
 
 **curl — list collections**
 
 ```bash
+export BDSA_API_KEY='your-secret'
 curl -s -H "X-API-Key: $BDSA_API_KEY" \
   https://api.bdsa.io/api/collections
 ```
@@ -96,6 +96,59 @@ curl -X PUT \
   "https://api.bdsa.io/api/collections/my-collection-id/protocols"
 ```
 
+#### Block (blocking) protocols
+
+A **block protocol** describes one physical tissue block that may contain **multiple region protocols** (distinct brain regions sampled together). Stored in `blockProtocols[]` on the collection protocols document.
+
+```json
+{
+  "id": "kentucky_block_hipp_amyg",
+  "type": "block",
+  "name": "Hippocampus + amygdala composite",
+  "description": "Optional SOP notes",
+  "slots": [
+    { "regionProtocolId": "kentucky_region_posterior_hippocampus" },
+    { "regionProtocolId": "kentucky_region_amygdala", "label": "amygdala portion" }
+  ]
+}
+```
+
+- `slots` is **ordered**; each entry references a `regionProtocolId` from `regionProtocols`.
+- Shorthand `regionProtocolIds: ["id1", "id2"]` is accepted when reading/importing.
+- **PUT/merge validates** that every `regionProtocolId` exists and is not duplicated within the same block (**422** on failure).
+- When `blockProtocols` is empty, consumers fall back to survey block indices (REGION 1–N → region protocol list order). Per-case overrides use `block2region` (separate API).
+- The Protocols UI also **warns** when two slots in the same block resolve to region protocols that share an `abbreviation` (e.g. both `HIPP`) — save is still allowed; disambiguate on the region protocols (`HIPP-L` / `HIPP-R`).
+
+#### Protocol abbreviations (filename tokens)
+
+Each **region** protocol should carry:
+
+| Field | Example | Role |
+|-------|---------|------|
+| `abbreviation` | `HIPP` | Filename / `networkFilename` token — **unique within the collection’s region protocols** |
+| `schemaRegionKey` | `Hippocampus` | BDSA region-metadata property key |
+| `displayName` | `Posterior hippocampus` | Short UI label |
+
+Each **stain** protocol should carry:
+
+| Field | Example | Role |
+|-------|---------|------|
+| `abbreviation` | `HE` | Filename token — unique within stain protocols (falls back to `schemaStainKey` / `stainType` if unset) |
+| `schemaStainKey` | `HE` | BDSA stain-metadata key |
+| `displayName` | `H&E` | Short UI label |
+
+The Protocols page **warns** (does not block save) when two region protocols or two stain protocols share the same abbreviation (case-insensitive), e.g. left and right hippocampus both using `HIPP`. Prefer distinct tokens such as `HIPP-L` / `HIPP-R`.
+
+Kentucky seed map and field notes: `docs/abbreviation_info.md`. Apply with:
+
+```bash
+docker compose run --rm \
+  -v "$(pwd)/scripts:/scripts:ro" \
+  -e BDSA_API_KEY \
+  backend python /scripts/seed_kentucky_abbreviations.py \
+  --api http://backend:8000
+```
+
 **Python**
 
 ```python
@@ -106,7 +159,8 @@ API = "https://api.bdsa.io"
 KEY = os.environ["BDSA_API_KEY"]
 HEADERS = {"X-API-Key": KEY}
 
-r = requests.get(f"{API}/api/schemas", headers=HEADERS, timeout=30)
+# Schemas are public — no key needed
+r = requests.get(f"{API}/api/schemas", timeout=30)
 r.raise_for_status()
 print(r.json())
 
@@ -131,6 +185,7 @@ print(r.json())
 | BDSA JSON schemas | `/api/schemas`, `/api/schemas/{id}`, `/api/schemas/combined` | — |
 | Collections | `/api/collections` | `/api/collections/{id}/metadata` |
 | Protocols | `/api/collections/{id}/protocols` | same path |
+| Clinical (by NACCID) | `/api/clinical/by-nacc/{naccid}`, `/api/clinical/stats` | — |
 | Case ID mappings | `/api/collections/{id}/case-id-mappings` | same path (+ merge, validate, allocate) |
 | Patient ID mappings | `/api/collections/{id}/patient-id-mappings` | same path |
 | Slides | `/api/collections/{id}/slides` | same path |
@@ -140,6 +195,55 @@ Schema download as attachment: `GET /api/schemas/clinical?download=true`
 
 See `backend/README.md` for merge routes, versioning, DSA sync, and admin backup.
 
+### Clinical data (by NACCID)
+
+Investigator NACC UDS fields mapped to the BDSA [clinical-metadata](/api/schemas/clinical) schema, stored one record per `NACCID` (latest visit for UDS fields; neuropath fields from the latest visit with a real value). Join to BDSA cases via `case-id-mappings.alternateIds.nacc`.
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/api/clinical/by-nacc/{naccid}` | Clinical fields for one NACCID (**404** if not loaded) |
+| GET | `/api/clinical/stats` | `{ "count": N }` records in Mongo |
+
+```bash
+curl -s -H "X-API-Key: $BDSA_API_KEY" \
+  "https://api.bdsa.io/api/clinical/by-nacc/NACC000011"
+```
+
+Example response:
+
+```json
+{
+  "naccid": "NACC000011",
+  "clinical": {
+    "NACCID": "NACC000011",
+    "NPSEX": 2,
+    "EDUC": 16,
+    "HISPANIC": 0,
+    "RACE": 1,
+    "NACCDAGE": null,
+    "NACCUDSD": 3,
+    "NPPMIH": null,
+    "NPADNC": null,
+    "NPWBRWT": null
+  },
+  "source": "investigator_nacc74",
+  "visitMeta": { "naccvnum": 4, "visitDate": "2010-01-01" },
+  "lastUpdated": "..."
+}
+```
+
+**Field mapping from investigator CSV:** `HISPANIC` ← `NACCHISP`; `NPSEX` ← `NPSEX` if set else `NACCSEX`; others 1:1.
+
+**Import** (stream the local dump into Mongo; CSV is gitignored). Prefer Docker so `pymongo` is available:
+
+```bash
+docker compose run --rm \
+  -v "$(pwd)/docs:/data:ro" -v "$(pwd)/scripts:/scripts:ro" \
+  backend python /scripts/import_nacc_clinical.py \
+  --csv /data/investigator_nacc74.csv \
+  --mongodb-url mongodb://mongodb:27017 \
+  --mongodb-db bdsa_protocols
+```
 ### Case ID mappings (localCaseId → bdsaCaseId)
 
 Per-collection registry used by pub-data sync (`bdsa-pub-data`). Format: `BDSA-{institutionId3}-{sequence5}` (e.g. `BDSA-002-00001` for U. Kentucky / `institutionId` `002`).
@@ -158,7 +262,7 @@ Each mapping row may include optional **`alternateIds`** — a map of external i
 | GET | `/api/collections/{id}/case-id-mappings/by-local/{localCaseId}` | Lookup one mapping |
 | GET | `/api/collections/{id}/case-id-mappings/by-alternate/{system}/{value}` | Lookup by external ID (e.g. `nacc/U1234567`) |
 
-**Merge `alternateIds`:** idempotent when the same value is re-posted. Returns **409** (`duplicate_alternate_id`) if a system value is already bound to a different `localCaseId`. You may merge alternate IDs alone on an existing case (no `bdsaCaseId` in the row).
+**Merge `alternateIds`:** idempotent when the same value is re-posted. Returns **409** (`duplicate_alternate_id`) if a system value is already bound to a different `localCaseId`. You may merge alternate IDs alone on an existing case (no `bdsaCaseId` in the row). Send `null` or `""` for a system key to remove that alias on merge.
 
 **Example — attach NACC ID to an existing case:**
 

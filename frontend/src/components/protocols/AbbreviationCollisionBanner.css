@@ -1,0 +1,47 @@
+.abbrev-collision-banner {
+  margin: 0 0 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.abbrev-collision-banner-warn {
+  background: #fff8e6;
+  border-color: #e6c35c;
+  color: #5c4a00;
+}
+
+.abbrev-collision-banner-note {
+  background: #f4f6f8;
+  border-color: #cfd6dd;
+  color: #3d4a57;
+}
+
+.abbrev-collision-banner strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.abbrev-collision-banner ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.abbrev-collision-banner li {
+  margin: 0.15rem 0;
+}
+
+.abbrev-collision-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+
+.abbrev-collision-hint code {
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+}

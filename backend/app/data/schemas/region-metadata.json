@@ -111,7 +111,11 @@
                                     "Middle",
                                     "Inferior",
                                     "Angular gyrus",
-                                    "Supramarginal gyrus"
+                                    "Supramarginal gyrus",
+                                    "BA5",
+                                    "BA7",
+                                    "BA39",
+                                    "BA40"
                                 ]
                             },
                             "minItems": 0,
@@ -127,10 +131,12 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "BA20",
+                                    "BA38"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Frontal": {
@@ -146,7 +152,13 @@
                                 "enum": [
                                     "Superior",
                                     "Middle",
-                                    "Inferior"
+                                    "Inferior",
+                                    "BA8",
+                                    "BA9",
+                                    "BA10",
+                                    "BA44",
+                                    "BA45",
+                                    "BA46"
                                 ]
                             },
                             "minItems": 0,
@@ -165,7 +177,12 @@
                                 "enum": [
                                     "Superior",
                                     "Middle",
-                                    "Inferior"
+                                    "Inferior",
+                                    "BA20",
+                                    "BA21",
+                                    "BA22",
+                                    "BA36",
+                                    "BA37"
                                 ]
                             },
                             "minItems": 0,
@@ -202,7 +219,10 @@
                                 "description": "Anatomical landmarks present:",
                                 "enum": [
                                     "Corpus callosum",
-                                    "Superior frontal"
+                                    "Superior frontal",
+                                    "Caudate head",
+                                    "BA24",
+                                    "BA32"
                                 ]
                             },
                             "minItems": 0,
@@ -219,7 +239,9 @@
                                 "description": "Anatomical landmarks present:",
                                 "enum": [
                                     "Corpus callosum",
-                                    "Superior frontal"
+                                    "Superior frontal",
+                                    "BA23",
+                                    "BA31"
                                 ]
                             },
                             "minItems": 0,
@@ -307,10 +329,19 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "Anterior Commissure",
+                                    "Nucleus Basalis of Meynert",
+                                    "Globus Pallidus",
+                                    "Caudate",
+                                    "Caudate head",
+                                    "Internal Capsule",
+                                    "External Capsule",
+                                    "Putamen",
+                                    "Nucleus Accumbens"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Occipital": {
@@ -323,10 +354,14 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "Line of Gennari (BA17)",
+                                    "BA17",
+                                    "BA18",
+                                    "BA19"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Motor_cortex": {
@@ -339,10 +374,14 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "BA4",
+                                    "BA6",
+                                    "Precentral gyrus",
+                                    "Central sulcus"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Insula": {
@@ -354,10 +393,12 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "BA13",
+                                    "BA14"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Frontal_pole": {
@@ -369,10 +410,11 @@
                             "items": {
                                 "type": "string",
                                 "description": "Anatomical landmarks present:",
-                                "enum": []
+                                "enum": [
+                                    "BA10"
+                                ]
                             },
                             "minItems": 0,
-                            "maxItems": 0,
                             "uniqueItems": true
                         },
                         "Spinal_cord": {
@@ -479,7 +521,8 @@
                     "enum": [
                         "left",
                         "right",
-                        "bilateral"
+                        "bilateral",
+                        "unknown"
                     ]
                 },
                 "sliceOrientation": {

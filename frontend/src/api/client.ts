@@ -5,6 +5,10 @@ export function getApiUrl(): string {
   return API_URL
 }
 
+export function hasApiKey(): boolean {
+  return Boolean(API_KEY)
+}
+
 /** Headers for authenticated API requests (when VITE_BDSA_API_KEY is set). */
 export function apiHeaders(extra?: HeadersInit): Headers {
   const headers = new Headers(extra)

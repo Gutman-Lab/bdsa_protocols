@@ -39,13 +39,20 @@ class RegionProtocolIn(BaseModel):
 
 
 class BlockProtocolIn(BaseModel):
-    """Block protocol: template mapping block IDs to region protocol ids."""
+    """Block (blocking) protocol: one physical block comprising one or more region protocols."""
 
     id: str | None = None
     name: str
     description: str | None = None
     type: str = "block"
-    slots: list[dict[str, str]] = Field(default_factory=list)
+    slots: list[dict[str, str]] = Field(
+        default_factory=list,
+        description=(
+            "Ordered region protocol membership. Each slot: "
+            '{"regionProtocolId": "...", "label": "optional sub-label"}. '
+            "Shorthand: regionProtocolIds string array is also accepted on read."
+        ),
+    )
     _localModified: bool | None = None
     _remoteVersion: str | None = None
     _isDefault: bool | None = None

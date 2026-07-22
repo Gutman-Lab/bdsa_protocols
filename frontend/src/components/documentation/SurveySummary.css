@@ -1,29 +1,34 @@
 .survey-summary {
-  padding: 1rem 0;
+  padding: 0;
 }
 
 .summary-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .summary-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 0.45rem;
+  line-height: 1.35;
 }
 
 .summary-stats {
   display: flex;
-  gap: 2rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.1rem;
+  padding: 0.35rem 0.55rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  min-width: 160px;
 }
 
 .stat-label {
@@ -33,44 +38,44 @@
 }
 
 .stat-value {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #2c3e50;
   font-weight: 600;
 }
 
 .summary-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .summary-section h3 {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .findings-list {
   list-style: disc;
-  padding-left: 1.5rem;
-  line-height: 1.8;
+  padding-left: 1.25rem;
+  line-height: 1.45;
 }
 
 .findings-list li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
   color: #555;
 }
 
 .protocols-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.65rem;
 }
 
 .protocol-card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.35rem;
 }
 
 .protocol-card h4 {
@@ -108,13 +113,13 @@
 .regions-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .region-card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.35rem;
 }
 
 .region-header {
@@ -153,20 +158,20 @@
 .thickness-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 0.75rem;
 }
 
 .thickness-stats {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.4rem;
 }
 
 .thickness-stat {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
+  padding: 0.4rem 0.55rem;
   background-color: #f5f5f5;
   border-radius: 4px;
 }
@@ -195,8 +200,8 @@
 
 .antibodies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.65rem;
 }
 
 .antibody-card {
@@ -225,14 +230,14 @@
 
 .figures-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 0.75rem;
 }
 
 .figure-card {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.4rem;
 }
 
 .figure-card img {

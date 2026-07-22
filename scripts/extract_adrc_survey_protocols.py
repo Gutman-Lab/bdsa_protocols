@@ -93,6 +93,22 @@ LANDMARK_MAP: dict[str, str] = {
     "Cortex": "Cortex",
     "Pre": "Pre",
     "Post": "Post",
+    "Anterior Commissure": "Anterior Commissure",
+    "Nucleus Basalis of Meynert": "Nucleus Basalis of Meynert",
+    "Globus Pallidus": "Globus Pallidus",
+    "Caudate": "Caudate",
+    "Caudate Head": "Caudate head",
+    "Caudate head": "Caudate head",
+    "Internal Capsule": "Internal Capsule",
+    "External Capsule": "External Capsule",
+    "Putamen": "Putamen",
+    "Nucleus Accumbens": "Nucleus Accumbens",
+    "Line of Gennari (BA17)": "Line of Gennari (BA17)",
+    "Line of Gennari": "Line of Gennari (BA17)",
+    "BA17": "BA17",
+    "BA18": "BA18",
+    "BA19": "BA19",
+    "Super": "Super",
 }
 
 REGION_SECTIONS: list[tuple[str, str, str, str]] = [
@@ -418,10 +434,18 @@ def region_is_collected(landmarks_raw: str | None, stains_raw: str | None) -> bo
     )
 
 
+def normalize_hemisphere(raw: str | None) -> str:
+    value = (raw or "").strip().lower()
+    if value in ("both", "bilateral"):
+        return "bilateral"
+    if value in ("left", "right", "unknown"):
+        return value
+    return "unknown"
+
+
 def build_region_protocols(row: dict[str, str], slug: str, display: str) -> list[dict[str, Any]]:
     slice_thickness = parse_thickness(row.get("Average Section thickness in μm:"))
-    hemisphere_raw = (row.get("Brain Hemisphere") or "left").strip().lower()
-    hemisphere = "bilateral" if hemisphere_raw == "both" else hemisphere_raw
+    hemisphere = normalize_hemisphere(row.get("Brain Hemisphere"))
     submitted = (row.get("Submission Date") or "").strip()
 
     protocols: list[dict[str, Any]] = []

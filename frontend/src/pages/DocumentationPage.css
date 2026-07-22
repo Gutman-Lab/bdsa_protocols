@@ -1,10 +1,12 @@
 .documentation-page {
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .documentation-page h2 {
-  font-size: 1.75rem;
+  font-size: 1.35rem;
   color: #2c3e50;
-  margin-bottom: 2rem;
+  margin: 0 0 0.5rem;
 }
 

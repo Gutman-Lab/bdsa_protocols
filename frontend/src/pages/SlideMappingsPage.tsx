@@ -19,6 +19,10 @@ import {
   protocolField,
 } from '../utils/protocolDisplay'
 import { findProtocolById, protocolRowHoverHandlers } from '../utils/protocolHover'
+import {
+  formatBlockSlotsSummary,
+  normalizeBlockProtocol,
+} from '../utils/blockProtocols'
 import './SlideMappingsPage.css'
 
 type MappingTab = 'stain' | 'block' | 'cases' | 'protocols'
@@ -177,6 +181,10 @@ function BlockTab({
   onProtocolHover: (id: string | null) => void
 }) {
   const explicitBlocks = blockProtocols.length > 0
+  const normalizedBlocks = useMemo(
+    () => blockProtocols.map((b) => normalizeBlockProtocol(b)),
+    [blockProtocols],
+  )
 
   return (
     <div>
@@ -188,7 +196,7 @@ function BlockTab({
         </h3>
         <p className="slide-mappings-section-desc">
           {explicitBlocks
-            ? 'Collection-level block protocol definitions.'
+            ? 'Collection-level blocking protocols — each block may include multiple region protocols.'
             : 'When REGION is numeric (1–14), block index maps to region protocols in list order.'}
         </p>
         {explicitBlocks ? (
@@ -198,17 +206,19 @@ function BlockTab({
                 <tr>
                   <th>Block ID</th>
                   <th>Name</th>
+                  <th>Region protocols in block</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody>
-                {blockProtocols.map((block) => (
-                  <tr key={String(block.id)}>
+                {normalizedBlocks.map((block) => (
+                  <tr key={block.id}>
                     <td>
-                      <code>{String(block.id)}</code>
+                      <code>{block.id}</code>
                     </td>
-                    <td>{String(block.name ?? '—')}</td>
-                    <td>{String(block.description ?? '—')}</td>
+                    <td>{block.name}</td>
+                    <td>{formatBlockSlotsSummary(block, regionProtocols)}</td>
+                    <td>{block.description || '—'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -367,6 +377,13 @@ export default function SlideMappingsPage() {
     }
   }, [loadCollections])
 
+  const refreshBundle = useCallback(() => {
+    if (!collectionId) return
+    fetchSlideMappingBundle(collectionId)
+      .then((data) => setBundle(data))
+      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+  }, [collectionId])
+
   useEffect(() => {
     if (!collectionId) {
       setBundle(null)
@@ -514,6 +531,7 @@ export default function SlideMappingsPage() {
                   )}
                   {activeTab === 'cases' && (
                     <CaseIdMappingsTab
+                      collectionId={collectionId}
                       caseMappings={bundle.caseMappings}
                       caseInstitutionId={bundle.caseInstitutionId}
                       caseLastUpdated={bundle.caseLastUpdated}
@@ -522,6 +540,7 @@ export default function SlideMappingsPage() {
                       patientInstitutionId={bundle.patientInstitutionId}
                       patientLastUpdated={bundle.patientLastUpdated}
                       patientSource={bundle.patientSource}
+                      onMappingsUpdated={refreshBundle}
                     />
                   )}
                   {activeTab === 'protocols' && (

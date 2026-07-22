@@ -23,7 +23,9 @@ from app.api.routes import (
     dsa_sync_router,
     admin_router,
     schemas_router,
+    clinical_router,
 )
+from app.db.clinical_repository import ensure_clinical_indexes
 
 API_ROUTERS = [
     protocols_router,
@@ -37,6 +39,7 @@ API_ROUTERS = [
     dsa_sync_router,
     admin_router,
     schemas_router,
+    clinical_router,
 ]
 
 
@@ -45,6 +48,7 @@ async def lifespan(app: FastAPI):
     """Ensure DB is available on startup and close on shutdown."""
     log_api_key_status()
     await get_db()
+    await ensure_clinical_indexes()
     yield
     await close_db()
 
@@ -95,8 +99,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Schema files are public (list + GET). Everything else under /api requires the key when set.
 for router in API_ROUTERS:
-    app.include_router(router, prefix="/api", dependencies=[Depends(require_api_key)])
+    deps = [] if router is schemas_router else [Depends(require_api_key)]
+    app.include_router(router, prefix="/api", dependencies=deps)
 
 
 @app.get("/")
